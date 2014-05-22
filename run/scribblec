@@ -1,0 +1,77 @@
+#!/bin/sh
+
+
+PRG=`basename "$0"`
+DIR=`dirname "$0"`/..
+#BASEDIR=$(dirname $0)
+
+usage() {
+  echo scribblec:
+  cat <<EOF
+  -h --help                                     display this information
+  -V                                            echo the python command
+  -ip [path]                                    Scribble import path
+  -pp [path]                                    Payload type path
+  -project [full global protocol name] [role]   project local protocols
+EOF
+}
+
+fixpythonpath() {
+  windows=0
+
+  if [ `uname | grep -c CYGWIN` -ne 0 ]; then
+    windows=1
+  fi
+
+  cp="$1"
+  if [ "$windows" = 1 ]; then
+      cygpath -pw "$cp"
+  else
+      echo "$cp"
+  fi
+}
+
+ARGS=
+PYPATH=$DIR'/lib/:'$DIR'/parser/src/scribble/:'$DIR'/parser/'
+PYPATH=`fixpythonpath "$PYPATH"`
+
+scribblec() {
+	eval "PYTHONPATH='$PYPATH' python $DIR/src/scribble/main.py" "$@"
+}
+
+while true; do
+    case "$1" in
+        "")
+            break
+            ;;
+        -V)
+            verbose=1
+            shift
+            ;;
+        -h)
+            usage=1
+            break
+            ;;
+        --help)
+            usage=1
+            break
+            ;;
+        *)
+            ARGS="$ARGS '$1'"
+            shift
+            ;;
+    esac
+done
+
+if [ "$usage" = 1 ]; then
+  usage
+  exit 0
+fi
+
+# FIXME: factor out with above usage
+if [ "$verbose" = 1 ]; then
+  echo "PYTHONPATH='$PYPATH' python '$DIR'/src/scribble/main.py" "$@"
+fi
+
+scribblec "$ARGS"
+
