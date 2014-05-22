@@ -54,40 +54,6 @@ _PROJECT_ROLE = '_PROJECT_ROLE'
 _PROJECT_DIR = '_PROJECT_DIR'
 
 
-# General TODO:
-# - go through global and local modules
-# - eliminate redundant Context clones
-# - remove deprecated modules
-# - replace scoped rec labs by Context push/pop
-# - better factoring of choice/parallel context leave
-# - name substitutor refactoring; pretty-printer visitor
-# - factor out projection name mangling (projection, do references,
-#   reachability checking, etc.)
-# - interrupt parameters
-# - local node pretty printing; factor out with global pretty printing
-# - refactor function imports and exports in each module (resolve cycles)
-# - make import dependencies precise for payload types
-# - maybe do-projection should check role involvement, although empty protocols
-#   are ok
-# - fix underscore hack in parsing global names from local projection names
-# - projection of multicast and self-communication
-# - check guarded do in local/projections (for e.g. once-unrolling of do in
-#   choice)
-# - multiple throws clauses for annotations (annotation projections)
-# - arguments attribute of localdo (and similarly for other local nodes)
-# - check recursive (local) do is guarded <---
-# - substitute top level protocol declared names for aliases (maybe not 
-#   necessary for correctness but more consistent?)
-
-# Done?
-# - function renaming (PEP8)
-# - module renaming (PEP8)
-# - revise role/argument aliasing in projection
-# - make projected module imports precise for required subprotocols
-# - check guarded continue in local/projections
-# - throws projection (role collection -- also not-involved block projection)
-
-
 def main(argv, otherArg=None):
     args = _parse_command_line_args(sys.argv)
     if not args[_SOURCE]:
