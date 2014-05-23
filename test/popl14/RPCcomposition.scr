@@ -1,0 +1,47 @@
+/**
+ * https://confluence.oceanobservatories.org/display/syseng/CIAD+COI+OV+Conversation+Management
+ *
+ *$ run/scribblec test/demo/popl14/RPCcomposition.scr -project popl14.RPCcomposition.Comp1 Service1 -o output
+ */
+
+module popl14.RPCcomposition;
+
+
+global protocol Comp1(role Client as C,
+                      role Service1 as S1, role Service2 as S2,
+									 	 role Service3 as S3, role Service4 as S4) {
+	m1() from C to S1;
+		m2() from S1 to S2;
+		m2a() from S2 to S1;
+		m3() from S1 to S3;
+			m4() from S3 to S4;
+			m4a() from S4 to S3;
+			m5() from S3 to S4;
+			m5a() from S4 to S3;
+		m3a() from S3 to S1;
+	m1a() from S1 to C;
+}
+
+
+global protocol RPC<sig M1, sig M2>(role Client as C, role Server as S)
+{
+	M1 from C to S;
+	M2 from S to C;
+}
+
+global protocol Relay<sig M1, sig M2>(
+		role First as F, role Middle as M, role Last as L) {
+	M1 from F to M;
+	M2 from M to L;
+}
+
+global protocol Comp2(role Client as C,
+                      role Service1 as S1, role Service2 as S2,
+										  role Service3 as S3, role Service4 as S4) {
+	do Relay<m1(), m2()>(C as First, S1 as Middle, S2 as Last);
+	do Relay<m2a(), m3()>(S2 as First, S1 as Middle, S3 as Last);
+	do RPC<m4(), m4a()>(S3 as Client, S4 as Server);
+	do RPC<m5(), m5a()>(S3 as Client, S4 as Server);
+	do Relay<m3a(), m1a()>(S2 as First, S1 as Middle, C as Last);
+}
+
