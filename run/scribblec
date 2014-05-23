@@ -32,7 +32,7 @@ fixpythonpath() {
 }
 
 ARGS=
-PYPATH=$DIR'/lib/:'$DIR'/parser/src/scribble/:'$DIR'/parser/'
+PYPATH=$DIR'/antlr/:'$DIR'/parser/src/scribble/:'$DIR'/parser/'
 PYPATH=`fixpythonpath "$PYPATH"`
 
 scribblec() {
