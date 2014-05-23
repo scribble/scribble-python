@@ -19,6 +19,8 @@ Building the tool
 Running the tool
 ----------------
 
+- Requirements: Python 2.7.3 or higher
+
 We use the test/popl4/Neogitation1.scr Scribble source file as an example.
 
 - To validate the well-formedness of all global protocols, from the scribble-python base directory:
