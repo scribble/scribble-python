@@ -1,0 +1,30 @@
+/**
+ * https://confluence.oceanobservatories.org/display/syseng/CIAD+COI+OV+Negotiate+Protocol
+ *
+ *$ bin/scribblec test/demo/popl14/Negotiation2.scr -project popl14.Negotiation2.Negotiate Consumer -o output
+ */
+
+module popl14.Negotiation2;
+
+
+type <yml> "SAPDoc1" from "SAPDoc1.yml" as SAP;
+
+
+global protocol Negotiate(role Consumer, role Producer) {
+	propose(SAP) from Consumer to Producer;
+	do NegotiateAux(Consumer as Proposer, Producer as CounterParty);
+}
+
+global protocol NegotiateAux(
+		role Proposer as A, role CounterParty as B) {
+	choice at B {
+		accept() from B to A;
+		confirm() from A to B;
+	} or {
+		reject() from B to A;
+	} or {
+		propose(SAP) from B to A;
+		do NegotiateAux(B as Proposer, A as CounterParty);
+	}
+}
+

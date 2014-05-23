@@ -1,0 +1,48 @@
+//$ bin/scribblec test/demo/popl14/WF.scr
+
+module popl14.WF;
+
+
+global protocol ChoiceAmbiguous(role A, role B, role C) {
+	choice at A {
+		m1() from A to B;
+		m2() from B to C;
+		m3() from C to A;
+	} or {
+		m1() from A to B;
+		m5() from B to C;
+		m6() from C to A;
+	}
+}
+
+
+/*global protocol ChoiceNotCommunicated(role A, role B, role C) {
+	choice at A {
+		m1() from A to B;
+		m2() from B to C;
+	} or {
+		m4() from A to B;
+	}
+}*/
+
+
+/*global protocol ParallelNotLinear(role A, role B, role C) {
+	par {
+		m1() from A to B;
+		m2() from B to C;
+	} and {
+		m1() from A to B;
+		m4() from B to C;
+	}
+}*/
+
+
+/*global protocol RecursionNoExit(role A, role B, role C, role D) {
+	rec X {
+		m1() from A to B;
+		continue X;
+	}
+	m2() from B to A;
+	m3() from C to D;
+}*/
+

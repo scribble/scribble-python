@@ -1,0 +1,36 @@
+/**
+  * https://confluence.oceanobservatories.org/display/CIDev/
+Resource+Control+in+Scribble
+ *
+ *$ bin/scribblec test/demo/popl14/RUC.scr -project popl14.RUC.RUC User -o output
+ */
+
+module popl14.RUC;
+
+
+type <py> "IntType" from "Types.py" as int;
+
+
+global protocol RUC(
+		role User as U, role Controller as C, role Agent as A) {
+	req(int) from U to C;
+	start() from C to A;
+	interruptible {
+		rec X {
+			interruptible {
+				rec Y {
+					data() from A to U;
+					continue Y;
+				}
+			} with {
+				pause() by U;
+			}
+			resume() from U to A;
+			continue X;
+		}
+	} with {
+		stop() by U;
+		timeout() by C;
+	}
+}
+
