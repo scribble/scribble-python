@@ -1,13 +1,3 @@
-/*
- * Raymond@HZHL2 ~/code/python/scribble-tools
- * $ java -cp lib/antlr-3.1.3.jar org.antlr.Tool -o bin src/scribble/Scribble.g
-*/
-
-// Use language actions to directly create lists etc.? but ties the grammar source to that language?
-
-// Garbage at the end of input file seems to just get ignored, no error raised. but also for e.g. two package declarations -- check if this is still the case?
-
-
 grammar Scribble;
 
 options
