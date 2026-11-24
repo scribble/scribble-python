@@ -1,15 +1,15 @@
-import scrib_util as util
+import scribble.scrib_util as util
 
-from ast.node import Node as Node
+from scribble.ast.node import Node as Node
 
-from ast.roledecl import (
+from scribble.ast.roledecl import (
     get_declaration_name as roledecl_get_declaration_name,
     get_role_name as roledecl_get_role_name,
     get_alias_name as roledecl_get_alias_name,
     pretty_print as roledecl_pretty_print
 )
 
-from ast.globel.globalchoice import \
+from scribble.ast.globel.globalchoice import \
     DUMMY_ENABLING_OP as globalchoice_DUMMY_ENABLING_OP
 
 

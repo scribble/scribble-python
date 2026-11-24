@@ -7,65 +7,65 @@
 # child, instead of before
 
 
-import scrib_constants as constants
-import scrib_util as util
+import scribble.scrib_constants as constants
+import scribble.scrib_util as util
 
-from visit.visitor import Visitor as Visitor
+from scribble.visit.visitor import Visitor as Visitor
 
-from ast.importmodule import traverse as importmodule_traverse 
+from scribble.ast.importmodule import traverse as importmodule_traverse 
 # TODO: import members
-from ast.module import traverse as module_traverse
-from ast.moduledecl import traverse as moduledecl_traverse
-from ast.parameterdecllist import traverse as parameterdecllist_traverse
-from ast.payloadtypedecl import traverse as payloadtypedecl_traverse
-from ast.roledecllist import traverse as roledecllist_traverse
-from ast.roleinstantiationlist import \
+from scribble.ast.module import traverse as module_traverse
+from scribble.ast.moduledecl import traverse as moduledecl_traverse
+from scribble.ast.parameterdecllist import traverse as parameterdecllist_traverse
+from scribble.ast.payloadtypedecl import traverse as payloadtypedecl_traverse
+from scribble.ast.roledecllist import traverse as roledecllist_traverse
+from scribble.ast.roleinstantiationlist import \
     traverse as roleinstantiationlist_traverse
-from ast.roleinstantiation import traverse as roleinstantiation_traverse
-from ast.argumentlist import traverse as argumentlist_traverse
-from ast.argument import traverse as argument_traverse
-from ast.messagesignature import traverse as messagesignature_traverse
-from ast.payload import traverse as payload_traverse
-from ast.payloadelement import traverse as payloadelement_traverse
+from scribble.ast.roleinstantiation import traverse as roleinstantiation_traverse
+from scribble.ast.argumentlist import traverse as argumentlist_traverse
+from scribble.ast.argument import traverse as argument_traverse
+from scribble.ast.messagesignature import traverse as messagesignature_traverse
+from scribble.ast.payload import traverse as payload_traverse
+from scribble.ast.payloadelement import traverse as payloadelement_traverse
 
-from ast.globel.globalprotocoldecl import \
+from scribble.ast.globel.globalprotocoldecl import \
     traverse as globalprotocoldecl_traverse
-from ast.globel.globalprotocoldef import \
+from scribble.ast.globel.globalprotocoldef import \
     traverse as globalprotocoldef_traverse
-from ast.globel.globalprotocolblock import \
+from scribble.ast.globel.globalprotocolblock import \
     traverse as globalprotocolblock_traverse
-from ast.globel.globalinteractionsequence import \
+from scribble.ast.globel.globalinteractionsequence import \
     traverse as globalinteractionsequence_traverse
-from ast.globel.globalmessagetransfer import \
+from scribble.ast.globel.globalmessagetransfer import \
     traverse as globalmessagetransfer_traverse
-from ast.globel.globalchoice import traverse as globalchoice_traverse
-from ast.globel.globalrecursion import traverse as globalrecursion_traverse
-from ast.globel.globalcontinue import traverse as globalcontinue_traverse
-from ast.globel.globalparallel import traverse as globalparallel_traverse
-from ast.globel.globalinterruptible import \
+from scribble.ast.globel.globalchoice import traverse as globalchoice_traverse
+from scribble.ast.globel.globalrecursion import traverse as globalrecursion_traverse
+from scribble.ast.globel.globalcontinue import traverse as globalcontinue_traverse
+from scribble.ast.globel.globalparallel import traverse as globalparallel_traverse
+from scribble.ast.globel.globalinterruptible import \
     traverse as globalinterruptible_traverse
-from ast.globel.globalinterrupt import traverse as globalinterrupt_traverse
-from ast.globel.globaldo import traverse as globaldo_traverse
+from scribble.ast.globel.globalinterrupt import traverse as globalinterrupt_traverse
+from scribble.ast.globel.globaldo import traverse as globaldo_traverse
 
-from ast.local.localprotocoldecl import \
+from scribble.ast.local.localprotocoldecl import \
     traverse as localprotocoldecl_traverse
-from ast.local.localprotocoldef import \
+from scribble.ast.local.localprotocoldef import \
     traverse as localprotocoldef_traverse
-from ast.local.localprotocolblock import \
+from scribble.ast.local.localprotocolblock import \
     traverse as localprotocolblock_traverse
-from ast.local.localinteractionsequence import \
+from scribble.ast.local.localinteractionsequence import \
     traverse as localinteractionsequence_traverse
-from ast.local.localsend import traverse as localsend_traverse
-from ast.local.localreceive import traverse as localreceive_traverse
-from ast.local.localchoice import traverse as localchoice_traverse
-from ast.local.localrecursion import traverse as localrecursion_traverse
-from ast.local.localcontinue import traverse as localcontinue_traverse
-from ast.local.localparallel import traverse as localparallel_traverse
-from ast.local.localinterruptible import \
+from scribble.ast.local.localsend import traverse as localsend_traverse
+from scribble.ast.local.localreceive import traverse as localreceive_traverse
+from scribble.ast.local.localchoice import traverse as localchoice_traverse
+from scribble.ast.local.localrecursion import traverse as localrecursion_traverse
+from scribble.ast.local.localcontinue import traverse as localcontinue_traverse
+from scribble.ast.local.localparallel import traverse as localparallel_traverse
+from scribble.ast.local.localinterruptible import \
     traverse as localinterruptible_traverse
-from ast.local.localthrow import traverse as localthrow_traverse
-from ast.local.localcatch import traverse as localcatch_traverse
-from ast.local.localdo import traverse as localdo_traverse
+from scribble.ast.local.localthrow import traverse as localthrow_traverse
+from scribble.ast.local.localcatch import traverse as localcatch_traverse
+from scribble.ast.local.localdo import traverse as localdo_traverse
 
 
 # Not integrated with ContextVisitor (enter/exit node pattern) for a single AST

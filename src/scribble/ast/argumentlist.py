@@ -1,9 +1,9 @@
-import scrib_constants as constants
-import scrib_util as util
+import scribble.scrib_constants as constants
+import scribble.scrib_util as util
 
-from ast.node import Node as Node
+from scribble.ast.node import Node as Node
 
-from ast.argument import (
+from scribble.ast.argument import (
     get_arg_child as argument_get_arg_child,
     get_arg as argument_get_arg,
     has_parameter_child as argument_has_parameter_child,
@@ -11,19 +11,19 @@ from ast.argument import (
     pretty_print as argument_pretty_print
 )
 
-from ast.messagesignature import \
+from scribble.ast.messagesignature import \
     check_wellformedness as messagesignature_check_wellformedness
 
-from ast.parameterdecl import (
+from scribble.ast.parameterdecl import (
     get_kind as parameterdecl_get_kind,
     get_declaration_name as parameterdecl_get_declaration_name,
     get_parameter_name as parameterdecl_get_name
 )
 
-from ast.parameterdecllist import \
+from scribble.ast.parameterdecllist import \
     get_parameterdecl_children as parameterdecllist_get_parameterdecl_children
 
-from ast.globel.globalprotocoldecl import \
+from scribble.ast.globel.globalprotocoldecl import \
     get_parameterdecllist_child as \
     globalprotocoldecl_get_parameterdecllist_child
 
@@ -74,7 +74,7 @@ def check_wellformedness(checker, target, node_):
         # FIXME: tidy up usage of argpair and arg
         #arg = argument.get_arg(argpair)
         arg = argument_get_arg_child(argpair)
-        targ_pd = params.next()
+        targ_pd = next(params)
 
         # Section 4.6.3 -- for each argument, one of the two cases must hold:
         kind = parameterdecl_get_kind(targ_pd)
@@ -91,7 +91,7 @@ def check_wellformedness(checker, target, node_):
               # Section 4.6.3 -- the argument should be a bound sig parameter
                 #util.report_error('Expected sig argument: ' + arg)
                 param = argument_get_arg(argpair)
-                if param not in context_.get_parameters().keys():
+                if param not in list(context_.get_parameters().keys()):
                     # The argument isn't a valid parameter
                     util.report_error("Bad argument : " + param)
                 #if context_.get_parameter(param) != constants.SIGKW:
@@ -108,7 +108,7 @@ def check_wellformedness(checker, target, node_):
             if val not in context_.get_visible_payloads():
                 # FIXME: factor out with payload
                 #if context_.get_current_module() + '.' + val in context_.get_visible_payloads():
-                if val not in context_.get_parameters().keys():
+                if val not in list(context_.get_parameters().keys()):
                     util.report_error("Bad argument: " + val)
                 ##if not(context_.get_parameter(val) == constants.TYPEKW):
                 if context_.get_parameter(val) != constants.KIND_PAYLOAD_TYPE:
@@ -137,7 +137,7 @@ def get_argument_map(context_, target, node_):
     args = get_argument_children(node_)
     for argpair in args:
         arg = argument_get_arg_child(argpair)
-        targ_pd = params.next()
+        targ_pd = next(params)
         argmap[parameterdecl_get_declaration_name(targ_pd)] = arg
     return argmap
 

@@ -1,13 +1,13 @@
-import scrib_constants as constants
-import scrib_util as util
+import scribble.scrib_constants as constants
+import scribble.scrib_util as util
 
-from ast.globel.globalrecursion import (
+from scribble.ast.globel.globalrecursion import (
     traverse_recursion as globalrecursion_traverse_recursion,
     get_label_child as globalrecursion_get_label_child,
     get_block_child as globalrecursion_get_block_child
 )
 
-from ast.local.localnode import LocalNode as LocalNode
+from scribble.ast.local.localnode import LocalNode as LocalNode
 
 
 #LABEL_INDEX = 0

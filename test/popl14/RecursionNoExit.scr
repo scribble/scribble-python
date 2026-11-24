@@ -1,0 +1,21 @@
+/**
+ * Well-formedness fixture for Section 4.6.7 -- recursion with no exit.
+ *
+ * The body of rec X loops back to X unconditionally, so the sequence can never
+ * terminate and m2()/m3() are unreachable; B and D would wait forever for a
+ * message the protocol can never reach.
+ *
+ *$ bin/scribblec test/demo/popl14/RecursionNoExit.scr
+ */
+
+module popl14.RecursionNoExit;
+
+
+global protocol RecursionNoExit(role A, role B, role C, role D) {
+	rec X {
+		m1() from A to B;
+		continue X;
+	}
+	m2() from B to A;
+	m3() from C to D;
+}

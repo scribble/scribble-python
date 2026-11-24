@@ -2,7 +2,7 @@
 # components
 
 
-import scrib_util as util
+import scribble.scrib_util as util
 
 
 EMPTY_ANNOTATION = 'EMPTY_ANNOTATION'

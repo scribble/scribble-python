@@ -1,16 +1,16 @@
-import scrib_constants as constants
-import scrib_util as util
+import scribble.scrib_constants as constants
+import scribble.scrib_util as util
 
 #from visit.rolecollector import RoleCollector  # cyclic imports...
 
-from ast.messagesignature import pretty_print as messagesignature_pretty_print
+from scribble.ast.messagesignature import pretty_print as messagesignature_pretty_print
 
-from ast.parameter import pretty_print as parameter_pretty_print
+from scribble.ast.parameter import pretty_print as parameter_pretty_print
 
-from ast.globel.globalprotocolblock import \
+from scribble.ast.globel.globalprotocolblock import \
     pretty_print as globalprotocolblock_pretty_print
 
-from ast.globel.globalinterrupt import (
+from scribble.ast.globel.globalinterrupt import (
     check_wellformedness as globalinterrupt_check_wellformedness,
     get_role as globalinterrupt_get_role,
     get_message_children as globalinterrupt_get_message_children,
@@ -105,7 +105,7 @@ def project(projector, node_):
     throw_messages = []
     for i in get_interrupt_children(node_):
         subj = globalinterrupt_get_role(i)  # String
-        roles = list(involved - set([subj]))
+        roles = sorted(involved - set([subj]))
         messages = []
         for sig in globalinterrupt_get_message_children(i): 
             # Factor out with interrupt, message transfer, argument, etc.

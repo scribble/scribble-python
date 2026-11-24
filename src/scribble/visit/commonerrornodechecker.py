@@ -1,8 +1,8 @@
 from antlr3.tree import CommonErrorNode as CommonErrorNode;
 
-import scrib_util as util
+import scribble.scrib_util as util
 
-from visit.traverser import Traverser as Traverser
+from scribble.visit.traverser import Traverser as Traverser
 
 
 class CommonErrorNodeChecker(Traverser):

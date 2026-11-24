@@ -1,0 +1,1 @@
+Bad choice block:  ['A', 'B', 'C']['A', 'B']

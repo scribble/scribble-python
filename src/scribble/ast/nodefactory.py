@@ -1,37 +1,37 @@
-import scrib_constants as constants
-import scrib_util as util
+import scribble.scrib_constants as constants
+import scribble.scrib_util as util
 
-from ast.importmodule import ImportModule as ImportModule
-from ast.module import Module as Module
-from ast.moduledecl import ModuleDecl as ModuleDecl
-from ast.payloadtypedecl import payloadTypeDecl as payloadTypeDecl
-from ast.roledecl import RoleDecl as RoleDecl
-from ast.roledecllist import RoleDeclList as RoleDeclList
-from ast.parameterdecl import ParameterDecl as ParameterDecl
-from ast.parameterdecllist import ParameterDeclList as ParameterDeclList
-from ast.roleinstantiation import RoleInstantiation as RoleInstantiation
-from ast.roleinstantiationlist import RoleInstantiationList as \
+from scribble.ast.importmodule import ImportModule as ImportModule
+from scribble.ast.module import Module as Module
+from scribble.ast.moduledecl import ModuleDecl as ModuleDecl
+from scribble.ast.payloadtypedecl import payloadTypeDecl as payloadTypeDecl
+from scribble.ast.roledecl import RoleDecl as RoleDecl
+from scribble.ast.roledecllist import RoleDeclList as RoleDeclList
+from scribble.ast.parameterdecl import ParameterDecl as ParameterDecl
+from scribble.ast.parameterdecllist import ParameterDeclList as ParameterDeclList
+from scribble.ast.roleinstantiation import RoleInstantiation as RoleInstantiation
+from scribble.ast.roleinstantiationlist import RoleInstantiationList as \
         RoleInstantiationList
-from ast.argument import Argument as Argument
-from ast.argumentlist import ArgumentList as ArgumentList
+from scribble.ast.argument import Argument as Argument
+from scribble.ast.argumentlist import ArgumentList as ArgumentList
 
-from ast.local.localprotocoldecl import LocalProtocolDecl as LocalProtocolDecl
-from ast.local.localprotocoldef import LocalProtocolDef as LocalProtocolDef
-from ast.local.localprotocolblock import LocalProtocolBlock as \
+from scribble.ast.local.localprotocoldecl import LocalProtocolDecl as LocalProtocolDecl
+from scribble.ast.local.localprotocoldef import LocalProtocolDef as LocalProtocolDef
+from scribble.ast.local.localprotocolblock import LocalProtocolBlock as \
         LocalProtocolBlock
-from ast.local.localinteractionsequence import LocalInteractionSequence as \
+from scribble.ast.local.localinteractionsequence import LocalInteractionSequence as \
         LocalInteractionSequence
-from ast.local.localchoice import LocalChoice as LocalChoice
-from ast.local.localrecursion import LocalRecursion as LocalRecursion
-from ast.local.localcontinue import LocalContinue as LocalContinue
-from ast.local.localparallel import LocalParallel as LocalParallel
-from ast.local.localinterruptible import LocalInterruptible as \
+from scribble.ast.local.localchoice import LocalChoice as LocalChoice
+from scribble.ast.local.localrecursion import LocalRecursion as LocalRecursion
+from scribble.ast.local.localcontinue import LocalContinue as LocalContinue
+from scribble.ast.local.localparallel import LocalParallel as LocalParallel
+from scribble.ast.local.localinterruptible import LocalInterruptible as \
         LocalInterruptible
-from ast.local.localthrow import LocalThrow as LocalThrow 
-from ast.local.localcatch import LocalCatch as LocalCatch
-from ast.local.localdo import LocalDo as LocalDo
-from ast.local.localsend import LocalSend as LocalSend
-from ast.local.localreceive import LocalReceive as LocalReceive
+from scribble.ast.local.localthrow import LocalThrow as LocalThrow 
+from scribble.ast.local.localcatch import LocalCatch as LocalCatch
+from scribble.ast.local.localdo import LocalDo as LocalDo
+from scribble.ast.local.localsend import LocalSend as LocalSend
+from scribble.ast.local.localreceive import LocalReceive as LocalReceive
 
 
 # Make classes for roles, message signatures, parameters, etc? or just Strings

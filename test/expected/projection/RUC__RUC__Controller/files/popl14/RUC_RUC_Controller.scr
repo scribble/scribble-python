@@ -1,0 +1,18 @@
+module popl14.RUC_RUC_Controller;
+
+
+
+type <py>  "IntType" from "Types.py" as int;
+
+local protocol RUC_Controller at Controller(role User as U, role Controller as C, role Agent as A) {
+req(int) from U;
+start() to A;
+interruptible __1
+{
+
+}
+with {
+throws timeout() to A, U;
+catches stop() from U;
+}
+}

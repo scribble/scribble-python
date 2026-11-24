@@ -1,0 +1,39 @@
+module popl14.Negotiation1_Negotiate_Consumer;
+
+
+
+type <yml>  "SAPDoc1" from "SAPDoc1.yml" as SAP;
+
+local protocol Negotiate_Consumer at Consumer(role Consumer as C, role Producer as P) {
+propose(SAP) to P;
+rec X
+{
+choice at P
+{
+accept() from P;
+confirm() to P;
+}
+or
+{
+reject() from P;
+}
+or
+{
+propose(SAP) from P;
+choice at C
+{
+accept() to P;
+confirm() from P;
+}
+or
+{
+reject() to P;
+}
+or
+{
+propose(SAP) to P;
+continue X;
+}
+}
+}
+}

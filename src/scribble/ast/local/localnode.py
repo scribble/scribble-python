@@ -1,4 +1,4 @@
-from ast.node import Node as Node
+from scribble.ast.node import Node as Node
 
 class LocalNode(Node):  # Factor out with global?
     def __init__(self, local_role):

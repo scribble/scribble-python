@@ -1,0 +1,22 @@
+/**
+ * Well-formedness fixture for Section 4.6.6 -- choice connectivity.
+ *
+ * In the second block of the choice at A, role C does not occur at all, so the
+ * set of roles involved in each block differs and C cannot be told which branch
+ * was chosen.  A projector that accepted this would leave C waiting for m2()
+ * or m3() on a branch that never sends it -- a deadlock.
+ *
+ *$ bin/scribblec test/demo/popl14/ChoiceNotCommunicated.scr
+ */
+
+module popl14.ChoiceNotCommunicated;
+
+
+global protocol ChoiceNotCommunicated(role A, role B, role C) {
+	choice at A {
+		m1() from A to B;
+		m2() from B to C;
+	} or {
+		m4() from A to B;
+	}
+}

@@ -1,0 +1,8 @@
+module popl14.RPCcomposition_Relay_Middle;
+
+
+
+local protocol Relay_Middle at Middle<sig M1, sig M2>(role First as F, role Middle as M, role Last as L) {
+M1 from F;
+M2 to L;
+}

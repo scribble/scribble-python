@@ -1,8 +1,8 @@
-import scrib_collections as collections
-import scrib_constants as constants
-import scrib_util as util
+import scribble.scrib_collections as collections
+import scribble.scrib_constants as constants
+import scribble.scrib_util as util
 
-from ast.globel.globalprotocolblock import \
+from scribble.ast.globel.globalprotocolblock import \
     pretty_print as globalprotocolblock_pretty_print
 
 
@@ -62,8 +62,8 @@ def context_visitor_leave(cv, node_):
         # includes sig parameters
     for c in contexts[1:]:
         tmp = c.get_operators()
-        for (src, dest) in tmp.keys():
-            if (src, dest) in ops.keys():
+        for (src, dest) in list(tmp.keys()):
+            if (src, dest) in list(ops.keys()):
                 ops[(src, dest)] |= tmp[(src, dest)]  # set union
             else:
                 ops[(src, dest)] = tmp[(src, dest)]
@@ -73,7 +73,7 @@ def context_visitor_leave(cv, node_):
     # child subcontext)
 
     # Add all operators and sig parameters seen in children for each src/dest pair
-    for (src, dest) in ops.keys():
+    for (src, dest) in list(ops.keys()):
         for op in ops[(src, dest)]:
             if not clone.is_operator_seen(src, dest, op):
                 clone = clone.add_operator(src, dest, op)
@@ -81,14 +81,14 @@ def context_visitor_leave(cv, node_):
     # Add all operators and sig parameters from parent Context for each src/dest
     # pair
     prev = clone.parent.get_operators()
-    for (src, dest) in prev.keys():
+    for (src, dest) in list(prev.keys()):
         for op in prev[(src, dest)]:
             if not(clone.is_operator_seen(src, dest, op)):
                 clone = clone.add_operator(src, dest, op)
 
     # TODO: Parallel deadlocks not specified in langref (maybe should not be)
     seen = set([])  # Only for used here for checking deadlocks
-    for (src, dest) in clone.get_operators().keys():
+    for (src, dest) in list(clone.get_operators().keys()):
         if (dest, src) in seen:  # too coarse grained?
             #print '[Warning] Potential deadlock: ', src, dest
                 # FIXME: false positive on A -> B; par { B -> A } -- clearing
@@ -101,7 +101,7 @@ def context_visitor_leave(cv, node_):
     # for each src/dest pair
     current = clone.get_enabled_roles()
     for c in contexts:
-        for role, ops in c.get_enabled_roles().items():
+        for role, ops in list(c.get_enabled_roles().items()):
             for op in ops:
                 # Need enabling ops from all par blocks
                 #if not(clone.is_role_enabled(role)): 
@@ -169,8 +169,8 @@ def check_wellformedness_visit(checker, node_):
         # includes sig parameters
     for c in contexts[1:]:
         tmp = c.get_operators()
-        for (src, dest) in tmp.keys():
-            if (src, dest) in ops.keys():
+        for (src, dest) in list(tmp.keys()):
+            if (src, dest) in list(ops.keys()):
                 us = ops[(src, dest)]
                 them = tmp[(src, dest)]
                 # Section 4.6.8 -- potential operators and parameters disjoint

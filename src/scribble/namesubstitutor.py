@@ -5,35 +5,35 @@
 
 import copy
 
-import scrib_constants as constants
-import scrib_util as util
+from . import scrib_constants as constants
+from . import scrib_util as util
 
 #from visit.visitor import Visitor as Visitor  # cyclic imports
-import visit.visitor as visitor
+import scribble.visit.visitor as visitor
 
-import ast.globel.globalprotocolblock as globalprotocolblock
-import ast.globel.globalinteractionsequence as globalinteractionsequence
-import ast.globel.globalmessagetransfer as globalmessagetransfer
-import ast.globel.globalchoice as globalchoice
-import ast.globel.globalrecursion as globalrecursion
-import ast.globel.globalcontinue as globalcontinue
-import ast.globel.globalparallel as globalparallel
-import ast.globel.globalinterrupt as globalinterrupt
-import ast.globel.globalinterruptible as globalinterruptible
+import scribble.ast.globel.globalprotocolblock as globalprotocolblock
+import scribble.ast.globel.globalinteractionsequence as globalinteractionsequence
+import scribble.ast.globel.globalmessagetransfer as globalmessagetransfer
+import scribble.ast.globel.globalchoice as globalchoice
+import scribble.ast.globel.globalrecursion as globalrecursion
+import scribble.ast.globel.globalcontinue as globalcontinue
+import scribble.ast.globel.globalparallel as globalparallel
+import scribble.ast.globel.globalinterrupt as globalinterrupt
+import scribble.ast.globel.globalinterruptible as globalinterruptible
 #import ast.globaldo as globaldo 
 # something weird is going on that doesn't allow this; it's to do with circular
 # imports
 
-import ast  # HACK: because (recursive) import ast.globaldo is a problem
+from . import ast  # HACK: because (recursive) import ast.globaldo is a problem
 
-import ast.argument as argument
-import ast.argumentlist as argumentlist
-import ast.messagesignature as messagesignature
-import ast.parameter as parameter
-import ast.payloadelement as payloadelement
-import ast.role as role
-import ast.roleinstantiation as roleinstantiation
-import ast.roleinstantiationlist as roleinstantiationlist
+import scribble.ast.argument as argument
+import scribble.ast.argumentlist as argumentlist
+import scribble.ast.messagesignature as messagesignature
+import scribble.ast.parameter as parameter
+import scribble.ast.payloadelement as payloadelement
+import scribble.ast.role as role
+import scribble.ast.roleinstantiation as roleinstantiation
+import scribble.ast.roleinstantiationlist as roleinstantiationlist
 
 
 class NameSubstitutor(visitor.Visitor):
@@ -92,7 +92,7 @@ class NameSubstitutor(visitor.Visitor):
         if util.get_node_type(msgnode) != constants.MESSAGE_SIGNATURE_NODE_TYPE:
             msg = parameter.get_parameter_name(msgnode)  # parameter or message signature
 
-            if msg in argmap.keys():  # a param to substitute
+            if msg in list(argmap.keys()):  # a param to substitute
                 val = argmap[msg]  # message signature or another parameter?
                 tmp.token = copy.deepcopy(msgnode.token)  # HACK: does it conflict with any parser meta data? e.g. line number?
                 #tmp.token.setText(_argmap[msg].getText())
@@ -108,7 +108,7 @@ class NameSubstitutor(visitor.Visitor):
                 tmp3.addChild(copy.deepcopy(payloadelement.get_annotation_child(pe)))
                 child = payloadelement.get_type_child(pe)
                 tmp4 = child.dupNode()
-                if child.getText() in argmap.keys():
+                if child.getText() in list(argmap.keys()):
                     val = argmap[child.getText()]
                     tmp4.token = copy.deepcopy(child.token)
                     util.set_node_type(tmp4, util.get_node_type(val))  # parameter name and payload type both correspond to the node type for this node (the text of the node)
@@ -119,7 +119,7 @@ class NameSubstitutor(visitor.Visitor):
 
         src = role.get_role_name(srcnode)
         tmp = srcnode.dupNode()  # FIXME: sort out dupNode vs deepclone
-        if src in rolemap.keys():  # FIXME: factor out this routine
+        if src in list(rolemap.keys()):  # FIXME: factor out this routine
             val = rolemap[src]
             #token = tmp.getToken()
             #token.setText(_rolemap[src])
@@ -135,7 +135,7 @@ class NameSubstitutor(visitor.Visitor):
         for destnode in destnodes:
             dest = role.get_role_name(destnode)
             tmp = destnode.dupNode()
-            if dest in rolemap.keys():
+            if dest in list(rolemap.keys()):
                 val = rolemap[dest]
                 tmp.token = copy.deepcopy(destnode.token)
                 #tmp.token.setText(_rolemap[dest])
@@ -152,7 +152,7 @@ class NameSubstitutor(visitor.Visitor):
         blocks = globalchoice.get_block_children(node)
         subj = role.get_role_name(subjnode)
         tmp = subjnode.dupNode()
-        if subj in rolemap.keys():
+        if subj in list(rolemap.keys()):
             val = rolemap[subj]
             tmp.token = copy.deepcopy(tmp.token)
             #tmp.token.setText(_rolemap[subj])
@@ -210,7 +210,7 @@ class NameSubstitutor(visitor.Visitor):
 
         dest = role.get_role_name(rolenode)  # FIXME: factor out with globalmessagetransfer
         tmp = rolenode.dupNode()
-        if dest in rolemap.keys():
+        if dest in list(rolemap.keys()):
             val = rolemap[dest]
             tmp.token = copy.deepcopy(rolenode.token)
             util.set_node_type(tmp, val)
@@ -220,7 +220,7 @@ class NameSubstitutor(visitor.Visitor):
             tmp = mn.dupNode()  # FIXME: factor out with globalmessagetransfer
             if util.get_node_type(mn) != constants.MESSAGE_SIGNATURE_NODE_TYPE:
                 msg = parameter.get_parameter_name(mn)  # parameter or message signature
-                if msg in argmap.keys():  # a param to substitute
+                if msg in list(argmap.keys()):  # a param to substitute
                     val = argmap[msg]  # message signature or another parameter?
                     tmp.token = copy.deepcopy(mn.token)  # HACK: does it conflict with any parser meta data? e.g. line number?
                     #tmp.token.setText(_argmap[msg].getText())
@@ -266,7 +266,7 @@ class NameSubstitutor(visitor.Visitor):
             #tmp3 = copy.deepcopy(argument.get_arg_child(arg))  # FIXME: should be uniform with MessageTransfer msgnode
             ours = util.get_node_type(tmp3)
             if ours != constants.MESSAGE_SIGNATURE_NODE_TYPE:
-                if ours in argmap.keys():
+                if ours in list(argmap.keys()):
                     val = argmap[ours]  # ours is a parameter name
                     tmp3.token = copy.deepcopy(tmp3.token)
                     #tmp3.token.setText(_argmap[ours])
@@ -287,7 +287,7 @@ class NameSubstitutor(visitor.Visitor):
                     tmp5.addChild(copy.deepcopy(payloadelement.get_annotation_child(pe)))
                     child = payloadelement.get_type_child(pe)
                     tmp6 = child.dupNode()
-                    if child.getText() in argmap.keys():
+                    if child.getText() in list(argmap.keys()):
                         val = argmap[child.getText()]
                         tmp6.token = copy.deepcopy(child.token)
                         util.set_node_type(tmp6, util.get_node_type(val))  # parameter name and payload type both correspond to the node type for this node (the text of the node)
@@ -307,7 +307,7 @@ class NameSubstitutor(visitor.Visitor):
             tmp3 = roleinstantiation.get_arg_child(ri).dupNode()  # each ours role node
             ours = util.get_node_type(tmp3)
             if ours != constants.MESSAGE_SIGNATURE_NODE_TYPE:  # FIXME: don't understand this line, but seems to break Import11 test when commented
-                if ours in rolemap.keys():
+                if ours in list(rolemap.keys()):
                     val = rolemap[ours]  # ours is a parameter name
                     tmp3.token = copy.deepcopy(tmp3.token)
                     #tmp3.token.setText(_rolemap[ours])

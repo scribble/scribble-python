@@ -1,12 +1,12 @@
-import scrib_constants as constants
-import scrib_util as util
+import scribble.scrib_constants as constants
+import scribble.scrib_util as util
 
-from ast.globel.globalparallel import (
+from scribble.ast.globel.globalparallel import (
     traverse_parallel as globalparallel_traverse_parallel,
     get_block_children as globalparallel_get_block_children
 )
 
-from ast.local.localnode import LocalNode as LocalNode
+from scribble.ast.local.localnode import LocalNode as LocalNode
 
 
 class LocalParallel(LocalNode):

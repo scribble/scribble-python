@@ -1,0 +1,32 @@
+module chan9;
+
+local protocol PA at A (role A, role B, role C) {
+m1() to B;
+m2() to B;
+m3() to B;
+m4() to B;
+m5() to B;
+m6() to B;
+m7() to B;
+m8() to B;
+m9() to B;
+n() to C;
+}
+
+local protocol PB at B (role A, role B, role C) {
+x() from C;
+m1() from A;
+m2() from A;
+m3() from A;
+m4() from A;
+m5() from A;
+m6() from A;
+m7() from A;
+m8() from A;
+m9() from A;
+}
+
+local protocol PC at C (role A, role B, role C) {
+n() from A;
+x() to B;
+}

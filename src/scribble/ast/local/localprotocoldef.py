@@ -1,9 +1,9 @@
-import scrib_constants as constants
-import scrib_util as util
+import scribble.scrib_constants as constants
+import scribble.scrib_util as util
 
-from ast.local.localnode import LocalNode as LocalNode
+from scribble.ast.local.localnode import LocalNode as LocalNode
 
-from ast.local.localprotocolblock import \
+from scribble.ast.local.localprotocolblock import \
     pretty_print as localprotocolblock_pretty_print
 
 

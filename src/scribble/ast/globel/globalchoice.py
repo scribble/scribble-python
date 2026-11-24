@@ -1,10 +1,10 @@
-import scrib_collections as collections
-import scrib_constants as constants
-import scrib_util as util
+import scribble.scrib_collections as collections
+import scribble.scrib_constants as constants
+import scribble.scrib_util as util
 
-from ast.role import get_role_name as role_get_name
+from scribble.ast.role import get_role_name as role_get_name
 
-from ast.globel.globalprotocolblock import \
+from scribble.ast.globel.globalprotocolblock import \
     pretty_print as globalprotocolblock_pretty_print
 
 
@@ -92,7 +92,7 @@ def context_visitor_leave(cv, node_):
     # carrying information over from the parent context, not just sequencing
     # sitations
     ##clone._enabled_roles = {}  # HACK (1)
-    for role_, ops in prev.items():
+    for role_, ops in list(prev.items()):
         for op in ops:
             # Carry "initial ops" over from parent context
             clone = clone.enable_role(role_, op)
@@ -101,13 +101,13 @@ def context_visitor_leave(cv, node_):
     enabled = collections.clone_collection(contexts[0].get_enabled_roles())
     for c in contexts[1:]:
         tmp = c.get_enabled_roles()
-        for role_, ops in tmp.items():
+        for role_, ops in list(tmp.items()):
             if role_ != subj:
                 enabled[role_] |= ops
-    for role_, ops in enabled.items():
+    for role_, ops in list(enabled.items()):
         # We only want the "intial ops", so if role_ was already enabled before
         # this choice, we don't need to record the ops we saw here
-        if role_ not in prev.keys():
+        if role_ not in list(prev.keys()):
             for op in ops:
                 clone = clone.enable_role(role_, op)
 
@@ -119,9 +119,9 @@ def context_visitor_leave(cv, node_):
     for c in contexts:
         # New potential operators from visiting blocks, add them all to the
         # existing map
-        for (src, dest), ops in c.get_operators().items():
+        for (src, dest), ops in list(c.get_operators().items()):
             for op in ops:
-                if (src, dest) not in potops.keys() or op not in potops[(src, dest)]:
+                if (src, dest) not in list(potops.keys()) or op not in potops[(src, dest)]:
                     # need to collect all operators (for parallel check) from
                     # each choice block as a set
                     clone = clone.add_operator(src, dest, op)
@@ -201,9 +201,9 @@ def check_wellformedness_visit(checker, node_):
         # Section 4.6.6 -- same set of roles occur in each block
         if set(tmp.keys()) != set(enabled.keys()):
             util.report_error("Bad choice block: " + ' '
-                             + str(enabled.keys()) + str(tmp.keys()))
+                             + str(list(enabled.keys())) + str(list(tmp.keys())))
                              # + "\n" + util.pretty_print(c.getnode()))
-        for role_, ops in tmp.items():
+        for role_, ops in list(tmp.items()):
             #if not(ops == None):
             if role_ != subj:
                 # Should be generalised for all roles that are already enabled,

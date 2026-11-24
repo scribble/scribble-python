@@ -1,11 +1,11 @@
-import scrib_util as util
+import scribble.scrib_util as util
 
 
 def traverse(traverser, node_):
     traversed = []
     for child in get_children(node_):
-        next = traverser.traverse(child)
-        traversed.append(next)
+        next_ = traverser.traverse(child)
+        traversed.append(next_)
     return util.antlr_dupnode_and_replace_children(node_, traversed)
 
 

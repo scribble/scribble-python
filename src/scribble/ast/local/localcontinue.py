@@ -1,11 +1,11 @@
-import scrib_constants as constants
+import scribble.scrib_constants as constants
 
-from ast.globel.globalcontinue import (
+from scribble.ast.globel.globalcontinue import (
     traverse_continue as globalcontinue_traverse_continue,
     get_label_child as globalcontinue_get_label_child
 )
 
-from ast.local.localnode import LocalNode as LocalNode
+from scribble.ast.local.localnode import LocalNode as LocalNode
 
 
 class LocalContinue(LocalNode):

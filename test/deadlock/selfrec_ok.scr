@@ -1,0 +1,16 @@
+module selfrec_ok;
+
+// A protocol that instantiates itself.  Under an unfolding bound this was
+// reported as `not checked` after two turns; as a fixpoint it is one closed
+// cycle, the reachable state space is finite, and the verdict is exact.
+local protocol LoopA at A (role A, role B) {
+m1() to B;
+m2() from B;
+do LoopA(A as A, B as B);
+}
+
+local protocol LoopB at B (role A, role B) {
+m1() from A;
+m2() to A;
+do LoopB(A as A, B as B);
+}

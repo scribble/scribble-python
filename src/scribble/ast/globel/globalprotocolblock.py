@@ -1,6 +1,6 @@
-import scrib_util as util
+import scribble.scrib_util as util
 
-from ast.globel.globalinteractionsequence import \
+from scribble.ast.globel.globalinteractionsequence import \
     pretty_print as globalinteractionsequence_pretty_print
 
 

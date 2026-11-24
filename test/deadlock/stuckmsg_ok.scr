@@ -1,0 +1,22 @@
+module stuckmsg_ok;
+
+// java good/wfchoice/enabling style: the branches are distinguishable at B
+local protocol SA at A (role A, role B) {
+choice at A {
+m1() to B;
+m2() from B;
+} or {
+m3() to B;
+m4() from B;
+}
+}
+
+local protocol SB at B (role A, role B) {
+choice at B {
+m1() from A;
+m2() to A;
+} or {
+m3() from A;
+m4() to A;
+}
+}

@@ -1,15 +1,15 @@
-import scrib_constants as constants
-import scrib_util as util
+import scribble.scrib_constants as constants
+import scribble.scrib_util as util
 
-from ast.messagesignature import (
+from scribble.ast.messagesignature import (
     get_operator as messagesignature_get_operator,
     check_wellformedness as messagesignature_check_wellformedness,
     pretty_print as messagesignature_pretty_print
 )
 
-from ast.role import get_role_name as role_get_name
+from scribble.ast.role import get_role_name as role_get_name
 
-from ast.parameter import (
+from scribble.ast.parameter import (
     get_parameter_name as parameter_get_name,
     pretty_print as parameter_pretty_print
 )
@@ -110,7 +110,7 @@ def check_wellformedness_enter(checker, node_):
         param = parameter_get_name(msg)
         op = param
         params = context.get_parameters()
-        if not param in params.keys():  # Bound parameter
+        if not param in list(params.keys()):  # Bound parameter
             util.report_error("Bad parameter: " + param)
         if params[param] != constants.KIND_MESSAGE_SIGNATURE:
             # sig parameter  # HACK?: using the KW

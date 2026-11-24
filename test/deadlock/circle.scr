@@ -1,0 +1,16 @@
+module circle;
+
+local protocol CircleA at A (role A, role B, role C) {
+m1() to B;
+m2() from C;
+}
+
+local protocol CircleB at B (role A, role B, role C) {
+m4() from C;
+m3() to A;
+}
+
+local protocol CircleC at C (role A, role B, role C) {
+m5() from A;
+m4() to B;
+}

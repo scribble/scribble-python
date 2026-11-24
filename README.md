@@ -1,33 +1,109 @@
 scribble-python
 ===============
 
-scribblec is a command line tool for validating the well-formedness of Scribble global protocols and peforming the projection to local protocols.
+scribblec is a command line tool for validating the well-formedness of Scribble
+global protocols and performing the projection to local protocols.
 
-Building and running the scribblec tool has been tested on Ubuntu Linux and Cygwin/Windows.
+This repository is a fork of https://github.com/scribble/scribble-python that
+has been migrated from Python 2 to Python 3 (see "Migration notes" below).
+It has been tested on Debian Linux.
 
 
 Building the tool
 -----------------
 
-- Requirements: Java RE 7 or later, Python 2.7.3 or higher
+- Requirements: Java 7 or later, Python 3.9 or later
 
 - From the scribble-python base directory:
 
   run/scribblec-build
 
+  This runs the bundled ANTLR 3.5.3 tool (antlr/antlr-3.5.3-complete.jar) over
+  src/scribble/Scribble.g, writing the generated lexer and parser to parser/.
+
 
 Running the tool
 ----------------
 
-- Requirements: Python 2.7.3 or higher
+- Requirements: Python 3.9 or later
 
-We use the test/popl4/Neogitation1.scr Scribble source file as an example.
+We use the test/popl14/Negotiation1.scr Scribble source file as an example.
 
-- To validate the well-formedness of all global protocols, from the scribble-python base directory:
+- To validate the well-formedness of all global protocols, from the
+  scribble-python base directory:
 
   run/scribblec test/popl14/Negotiation1.scr
 
-- To additionally project the "Negotiate" global protocol in this file to the local protocol for role "Consumer", to the output directory "output":
+- To additionally project the "Negotiate" global protocol in this file to the
+  local protocol for role "Consumer", to the output directory "output":
 
   run/scribblec test/popl14/Negotiation1.scr -project popl14.Negotiation1.Negotiate Consumer -o output
 
+- The interpreter used to run the tool defaults to python3 and can be
+  overridden with the PYTHON environment variable:
+
+  PYTHON=python3.12 run/scribblec test/popl14/Negotiation1.scr
+
+
+Migration notes
+---------------
+
+Changes relative to upstream, made to port the tool to Python 3:
+
+- src/scribble/**/*.py: mechanical 2to3 conversion (fissix) plus hand fixes for
+  the things a mechanical port cannot resolve, notably:
+
+  * implicit relative imports converted to absolute imports in the
+    "scribble" package (the tool is now invoked as "python3 -m scribble.main",
+    so src/ is on PYTHONPATH), and "from . import a.b" fixups;
+  * locals named "next" that shadowed the builtin and then broke "next(...)"
+    calls (renamed to next_);
+  * iterator.next() replaced with next(iterator);
+  * token.setText() replaced with the ANTLR 3.5 Python3 runtime's token.text
+    setter in scrib_util.set_node_type();
+  * role lists derived from sets are sorted so generated local protocols are
+    byte-for-byte reproducible: Py3 hashes strings with a per-process seed, so
+    unordered iteration produced randomly ordered "throws ... to" clauses.
+
+- src/scribble/Scribble.g: the ANTLR target is now "Python3".
+
+- antlr/: the vendored ANTLR 3.1.3 jar and its Python 2 runtime have been
+  replaced by antlr-3.5.3-complete.jar and the upstream ANTLR 3.5 Python3
+  runtime (from https://github.com/antlr/antlr3, runtime/Python3). The 3.1.3
+  Python target emits Python 2 code and its runtime does not run on Python 3.
+
+- run/scribblec, run/scribblec-build: updated for python3, the 3.5.3 jar and
+  the "scribble" package layout.
+
+Behavioural equivalence was checked against Python 2.7 (python:2.7-slim in a
+container): for every global protocol in test/popl14 (40 protocol/role
+projections), validation succeeds and the generated local protocols are
+byte-identical to the Python 2 output.
+
+Tests
+-----
+
+    pip install -r requirements-dev.txt
+    python3 -m pytest
+
+test/test_scribblec.py runs two gates over the corpus in test/:
+
+- validation: every .scr file is accepted and prints exactly the diagnostics
+  recorded under test/expected/validate/. Note that scribblec reports
+  well-formedness violations on stdout while still exiting 0, so the recorded
+  message is the assertion, not the exit status;
+- projection: every global protocol projected onto every declared role must
+  produce exactly the files recorded under test/expected/projection/, byte for
+  byte (41 generated local protocols over 40 protocol/role jobs; a protocol that
+  fails its own well-formedness check projects nothing and prints its
+  diagnostic instead, which is recorded too).
+
+Both trees were generated from the Python 2 reference implementation and are
+committed, so the suite is a porting regression test: a change that alters
+diagnostics or generated local protocols fails it. After an intentional
+behaviour change, re-record with
+
+    SCRIBBLE_UPDATE_GOLDENS=1 python3 -m pytest
+
+and say so in the commit message, because that discards the Python 2 oracle for
+the affected cases.

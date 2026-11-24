@@ -6,43 +6,43 @@
 
 # TODO: import members
 
-from ast.module import ( 
+from scribble.ast.module import ( 
     check_reachability_enter as module_check_reachability_enter,
     check_reachability_visit as module_check_reachability_visit,
     check_reachability_leave as module_check_reachability_leave
 )
 
-from ast.moduledecl import (
+from scribble.ast.moduledecl import (
     check_reachability_enter as moduledecl_check_reachability_enter,
     check_reachability_visit as moduledecl_check_reachability_visit,
     check_reachability_leave as moduledecl_check_reachability_leave
 )
 
-from ast.parameterdecllist import ( 
+from scribble.ast.parameterdecllist import ( 
     check_reachability_enter as parameterdecllist_check_reachability_enter,
     check_reachability_visit as parameterdecllist_check_reachability_visit,
     check_reachability_leave as parameterdecllist_check_reachability_leave
 )
 
-from ast.payloadtypedecl import ( 
+from scribble.ast.payloadtypedecl import ( 
     check_reachability_enter as payloadtypedecl_check_reachability_enter,
     check_reachability_visit as payloadtypedecl_check_reachability_visit,
     check_reachability_leave as payloadtypedecl_check_reachability_leave
 )
 
-from ast.roledecllist import ( 
+from scribble.ast.roledecllist import ( 
     check_reachability_enter as roledecllist_check_reachability_enter,
     check_reachability_visit as roledecllist_check_reachability_visit,
     check_reachability_leave as roledecllist_check_reachability_leave
 )
 
-from ast.local.localprotocoldecl import ( 
+from scribble.ast.local.localprotocoldecl import ( 
     check_reachability_enter as localprotocoldecl_check_reachability_enter,
     check_reachability_visit as localprotocoldecl_check_reachability_visit,
     check_reachability_leave as localprotocoldecl_check_reachability_leave
 )
 
-from ast.local.localprotocoldef import ( 
+from scribble.ast.local.localprotocoldef import ( 
     check_reachability_enter as localprotocoldef_check_reachability_enter,
     check_reachability_visit as localprotocoldef_check_reachability_visit,
     check_reachability_leave as localprotocoldef_check_reachability_leave
@@ -57,7 +57,7 @@ from ast.local.localprotocoldef import (
         localprotocolblock_check_reachability_leave
 )
 
-from ast.local.localinteractionsequence import ( 
+from scribble.ast.local.localinteractionsequence import ( 
     check_reachability_enter as 
         localinteractionsequence_check_reachability_enter,
     check_reachability_visit as \
@@ -66,13 +66,13 @@ from ast.local.localinteractionsequence import (
         localinteractionsequence_check_reachability_leave
 )
 
-from ast.local.localsend import ( 
+from scribble.ast.local.localsend import ( 
     check_reachability_enter as localsend_check_reachability_enter,
     check_reachability_visit as localsend_check_reachability_visit,
     check_reachability_leave as localsend_check_reachability_leave
 )
 
-from ast.local.localreceive import ( 
+from scribble.ast.local.localreceive import ( 
     check_reachability_enter as localreceive_check_reachability_enter,
     check_reachability_visit as localreceive_check_reachability_visit,
     check_reachability_leave as localreceive_check_reachability_leave
@@ -84,25 +84,25 @@ from ast.local.localreceive import (
     check_reachability_leave as localchoice_check_reachability_leave
 )
 
-from ast.local.localrecursion import ( 
+from scribble.ast.local.localrecursion import ( 
     check_reachability_enter as localrecursion_check_reachability_enter,
     check_reachability_visit as localrecursion_check_reachability_visit,
     check_reachability_leave as localrecursion_check_reachability_leave
 )
 
-from ast.local.localcontinue import ( 
+from scribble.ast.local.localcontinue import ( 
     check_reachability_enter as localcontinue_check_reachability_enter,
     check_reachability_visit as localcontinue_check_reachability_visit,
     check_reachability_leave as localcontinue_check_reachability_leave
 )
 
-from ast.local.localparallel import ( 
+from scribble.ast.local.localparallel import ( 
     check_reachability_enter as localparallel_check_reachability_enter,
     check_reachability_visit as localparallel_check_reachability_visit,
     check_reachability_leave as localparallel_check_reachability_leave
 )
 
-from ast.local.localinterruptible import ( 
+from scribble.ast.local.localinterruptible import ( 
     check_reachability_enter as \
         localinterruptible_check_reachability_enter,
     check_reachability_visit as \
@@ -111,13 +111,13 @@ from ast.local.localinterruptible import (
         localinterruptible_check_reachability_leave
 )
 
-from ast.local.localdo import ( 
+from scribble.ast.local.localdo import ( 
     check_reachability_enter as localdo_check_reachability_enter,
     check_reachability_visit as localdo_check_reachability_visit,
     check_reachability_leave as localdo_check_reachability_leave
 )"""
 
-from ast.nodefactory import NodeFactory as NodeFactory
+from scribble.ast.nodefactory import NodeFactory as NodeFactory
 
 
 # Following WellformednessChecker

@@ -1,23 +1,23 @@
-import scrib_util as util
+import scribble.scrib_util as util
 
-from ast.node import Node as Node
+from scribble.ast.node import Node as Node
 
-from ast.roledecl import (
+from scribble.ast.roledecl import (
     get_role_name as roledecl_get_role_name,
     get_declaration_name as roledecl_get_declaration_name
 )
 
-from ast.roledecllist import \
+from scribble.ast.roledecllist import \
     get_roledecl_children as roledecllist_get_roledecl_children
 
-from ast.roleinstantiation import (
+from scribble.ast.roleinstantiation import (
     get_arg as roleinstantiation_get_arg,
     has_parameter_child as roleinstantiation_has_parameter_child,
     get_parameter as roleinstantiation_get_parameter,
     pretty_print as roleinstantiation_pretty_print
 )
 
-from ast.globel.globalprotocoldecl import \
+from scribble.ast.globel.globalprotocoldecl import \
     get_roledecllist_child as \
     globalprotocoldecl_get_roledecllist_child
 
@@ -63,10 +63,10 @@ def check_wellformedness(context_, target, node_):
                   # maybe should do ROLE node_, as for argmap)
     for ri in ris:
         ours = roleinstantiation_get_arg(ri)
-        next = rparams.next()
-        theirs = roledecl_get_role_name(next)
+        next_ = next(rparams)
+        theirs = roledecl_get_role_name(next_)
         # Section 4.6.3 -- every role argument is bound and distinct
-        if (ours not in croles) or ours in rolemap.values():
+        if (ours not in croles) or ours in list(rolemap.values()):
             util.report_error("Bad role argument: " + ours)
         if roleinstantiation_has_parameter_child(ri):
             tmp = roleinstantiation_get_parameter(ri)
@@ -74,7 +74,7 @@ def check_wellformedness(context_, target, node_):
                 # Section 4.6.3 -- every instantiation parameter corresponds to
                 # the declared parameter in the protocol declaration
                 util.report_error("Bad role parameter: " + theirs + ", " +tmp)
-        rolemap[roledecl_get_declaration_name(next)] = ours
+        rolemap[roledecl_get_declaration_name(next_)] = ours
 
     return rolemap
 
@@ -89,8 +89,8 @@ def get_role_map(context_, target, node_):
     ris = get_roleinstantiation_children(node_)
     for ri in ris:
         ours = roleinstantiation_get_arg(ri)  # returns string
-        next = rparams.next()
-        rolemap[roledecl_get_declaration_name(next)] = ours
+        next_ = next(rparams)
+        rolemap[roledecl_get_declaration_name(next_)] = ours
     return rolemap
 
 

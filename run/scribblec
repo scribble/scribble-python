@@ -1,9 +1,11 @@
 #!/bin/sh
 
-
 PRG=`basename "$0"`
 DIR=`dirname "$0"`/..
-#BASEDIR=$(dirname $0)
+PYTHON=${PYTHON:-python3}
+
+# ANTLR 3 runtime lives in antlr/, the generated lexer/parser in parser/
+PYPATH="$DIR/src:$DIR/antlr:$DIR/parser/src/scribble:$DIR/parser"
 
 usage() {
   echo scribblec:
@@ -13,65 +15,19 @@ usage() {
   -ip [path]                                    Scribble import path
   -pp [path]                                    Payload type path
   -project [full global protocol name] [role]   project local protocols
+  -deadlock                                     check the local types for deadlock
 EOF
 }
 
-fixpythonpath() {
-  windows=0
+case "$1" in
+  -h|--help)
+    usage
+    exit 0
+    ;;
+  -V)
+    echo "PYTHONPATH='$PYPATH' $PYTHON -m scribble.main" "$@"
+    exit 0
+    ;;
+esac
 
-  if [ `uname | grep -c CYGWIN` -ne 0 ]; then
-    windows=1
-  fi
-
-  cp="$1"
-  if [ "$windows" = 1 ]; then
-      cygpath -pw "$cp"
-  else
-      echo "$cp"
-  fi
-}
-
-ARGS=
-PYPATH=$DIR'/antlr/:'$DIR'/parser/src/scribble/:'$DIR'/parser/'
-PYPATH=`fixpythonpath "$PYPATH"`
-
-scribblec() {
-	eval "PYTHONPATH='$PYPATH' python $DIR/src/scribble/main.py" "$@"
-}
-
-while true; do
-    case "$1" in
-        "")
-            break
-            ;;
-        -V)
-            verbose=1
-            shift
-            ;;
-        -h)
-            usage=1
-            break
-            ;;
-        --help)
-            usage=1
-            break
-            ;;
-        *)
-            ARGS="$ARGS '$1'"
-            shift
-            ;;
-    esac
-done
-
-if [ "$usage" = 1 ]; then
-  usage
-  exit 0
-fi
-
-# FIXME: factor out with above usage
-if [ "$verbose" = 1 ]; then
-  echo "PYTHONPATH='$PYPATH' python '$DIR'/src/scribble/main.py" "$@"
-fi
-
-scribblec "$ARGS"
-
+PYTHONPATH="$PYPATH" exec "$PYTHON" -m scribble.main "$@"

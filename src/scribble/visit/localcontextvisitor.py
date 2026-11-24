@@ -1,69 +1,69 @@
 # DEPRECATED
 
 
-import scrib_util as util
+import scribble.scrib_util as util
 
-from visit.context import Context as Context
-from visit.visitor import Visitor as Visitor
+from scribble.visit.context import Context as Context
+from scribble.visit.visitor import Visitor as Visitor
 
 # The following are the AST nodes that use the ContextVisitor enter/visit/leave
 # pattern; other nodes are passed over (they don't affect Context contents)
 
-from ast.roledecllist import (
+from scribble.ast.roledecllist import (
     context_visitor_enter as roledecllist_context_visitor_enter,
     context_visitor_visit as roledecllist_context_visitor_visit,
     context_visitor_leave as roledecllist_context_visitor_leave
 ) 
 
-from ast.parameterdecllist import (
+from scribble.ast.parameterdecllist import (
     context_visitor_enter as parameterdecllist_context_visitor_enter,
     context_visitor_visit as parameterdecllist_context_visitor_visit,
     context_visitor_leave as parameterdecllist_context_visitor_leave
 )
 
-from ast.globel.localprotocoldecl import (
+from scribble.ast.globel.localprotocoldecl import (
     context_visitor_enter as localprotocoldecl_context_visitor_enter,
     context_visitor_visit as localprotocoldecl_context_visitor_visit,
     context_visitor_leave as localprotocoldecl_context_visitor_leave
 ) 
 
-from ast.globel.localmessagetransfer import ( 
+from scribble.ast.globel.localmessagetransfer import ( 
     context_visitor_enter as localmessagetransfer_context_visitor_enter,
     context_visitor_visit as localmessagetransfer_context_visitor_visit,
     context_visitor_leave as localmessagetransfer_context_visitor_leave
 ) 
 
-from ast.globel.localchoice import ( 
+from scribble.ast.globel.localchoice import ( 
     context_visitor_enter as localchoice_context_visitor_enter,
     context_visitor_visit as localchoice_context_visitor_visit,
     context_visitor_leave as localchoice_context_visitor_leave
 ) 
 
-from ast.globel.localrecursion import ( 
+from scribble.ast.globel.localrecursion import ( 
     context_visitor_enter as localrecursion_context_visitor_enter,
     context_visitor_visit as localrecursion_context_visitor_visit,
     context_visitor_leave as localrecursion_context_visitor_leave
 ) 
 
-from ast.globel.localcontinue import ( 
+from scribble.ast.globel.localcontinue import ( 
     context_visitor_enter as localcontinue_context_visitor_enter,
     context_visitor_visit as localcontinue_context_visitor_visit,
     context_visitor_leave as localcontinue_context_visitor_leave
 ) 
 
-from ast.globel.localparallel import ( 
+from scribble.ast.globel.localparallel import ( 
     context_visitor_enter as localparallel_context_visitor_enter,
     context_visitor_visit as localparallel_context_visitor_visit,
     context_visitor_leave as localparallel_context_visitor_leave
 ) 
 
-from ast.globel.localinterruptible import ( 
+from scribble.ast.globel.localinterruptible import ( 
     context_visitor_enter as localinterruptible_context_visitor_enter,
     context_visitor_visit as localinterruptible_context_visitor_visit,
     context_visitor_leave as localinterruptible_context_visitor_leave
 ) 
 
-from ast.globel.localdo import ( 
+from scribble.ast.globel.localdo import ( 
     context_visitor_enter as localdo_context_visitor_enter,
     context_visitor_visit as localdo_context_visitor_visit,
     context_visitor_leave as localdo_context_visitor_leave

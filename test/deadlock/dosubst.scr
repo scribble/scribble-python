@@ -1,0 +1,21 @@
+module dosubst;
+
+// A `do` that renames both roles of its callee.  The caller may write the
+// instantiation positionally (`do Sub(A, B)`) or with explicit pairs
+// (`do Sub(A as C, B as D)`); either way the projection of the caller carries
+// one instantiation per callee role, in the callee declaration order, spelled
+// with the caller names.  Reading the substitution off the explicit pairs
+// only, or off the projection table, left A addressing D and the closure rule
+// refused the whole system.
+global protocol Main(role A, role B) {
+  do Sub(A as C, B as D);
+}
+
+global protocol Main2(role A, role B) {
+  do Sub(A, B);
+}
+
+global protocol Sub(role C, role D) {
+  m1() from C to D;
+  m2() from D to C;
+}

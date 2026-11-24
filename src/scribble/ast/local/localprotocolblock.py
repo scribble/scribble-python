@@ -1,8 +1,8 @@
-import scrib_util as util
+import scribble.scrib_util as util
 
-from ast.local.localnode import LocalNode as LocalNode
+from scribble.ast.local.localnode import LocalNode as LocalNode
 
-from ast.local.localinteractionsequence \
+from scribble.ast.local.localinteractionsequence \
     import pretty_print as localinteractionsequence_pretty_print
     
 """from ast.globel.globalprotocolblock import (

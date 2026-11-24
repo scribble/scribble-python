@@ -1,21 +1,21 @@
-import scrib_constants as constants
-import scrib_util as util
+import scribble.scrib_constants as constants
+import scribble.scrib_util as util
 
-from ast.roledecllist import (
+from scribble.ast.roledecllist import (
     get_role_names as roledecllist_get_role_names,
     pretty_print as roledecllist_pretty_print
 )
 
-from ast.parameterdecllist import (
+from scribble.ast.parameterdecllist import (
     EMPTY_PARAMETER_DECL_LIST as parameterdecllist_EMPTY_PARAMETER_DECL_LIST,
     pretty_print as parameterdecllist_pretty_print
 )
 
-from ast.role import get_role_name as role_get_role_name
+from scribble.ast.role import get_role_name as role_get_role_name
 
-from ast.local.localnode import LocalNode as LocalNode
+from scribble.ast.local.localnode import LocalNode as LocalNode
 
-from ast.local.localprotocoldef import (
+from scribble.ast.local.localprotocoldef import (
     LocalProtocolDef as LocalProtocolDef,
     pretty_print as localprotocoldef_pretty_print
 )

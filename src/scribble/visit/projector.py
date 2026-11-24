@@ -1,50 +1,50 @@
-import scrib_constants as constants
-import scrib_util as util
+import scribble.scrib_constants as constants
+import scribble.scrib_util as util
 
-from visit.visitor import Visitor as Visitor
+from scribble.visit.visitor import Visitor as Visitor
 
-from visit.rolecollector import RoleCollector
+from scribble.visit.rolecollector import RoleCollector
 
-from visit.subprotocolcollector import SubprotocolCollector
+from scribble.visit.subprotocolcollector import SubprotocolCollector
 
-from ast.nodefactory import NodeFactory as NodeFactory
+from scribble.ast.nodefactory import NodeFactory as NodeFactory
 
 #import ast.ImportMember as ImportMember
-from ast.importmodule import project as importmodule_project
-from ast.module import project as module_project
+from scribble.ast.importmodule import project as importmodule_project
+from scribble.ast.module import project as module_project
 
-from ast.module import (
+from scribble.ast.module import (
     pretty_print as module_pretty_print,
     get_full_name as module_get_full_name,
     project as module_project
 )
 
-from ast.moduledecl import project as moduledecl_project
-from ast.parameterdecl import project as parameterdecl_project
-from ast.parameterdecllist import project as parameterdecllist_project
-from ast.payloadtypedecl import project as payloadtypedecl_project
-from ast.roledecl import project as roledecl_project
-from ast.roledecllist import project as roledecllist_project
+from scribble.ast.moduledecl import project as moduledecl_project
+from scribble.ast.parameterdecl import project as parameterdecl_project
+from scribble.ast.parameterdecllist import project as parameterdecllist_project
+from scribble.ast.payloadtypedecl import project as payloadtypedecl_project
+from scribble.ast.roledecl import project as roledecl_project
+from scribble.ast.roledecllist import project as roledecllist_project
 
-from ast.globel.globalprotocoldecl import (
+from scribble.ast.globel.globalprotocoldecl import (
     get_name as globalprotocoldecl_get_name,
     project as globalprotocoldecl_project
 )
 
-from ast.globel.globalprotocoldef import project as globalprotocoldef_project
-from ast.globel.globalprotocolblock import \
+from scribble.ast.globel.globalprotocoldef import project as globalprotocoldef_project
+from scribble.ast.globel.globalprotocolblock import \
     project as globalprotocolblock_project
-from ast.globel.globalinteractionsequence import \
+from scribble.ast.globel.globalinteractionsequence import \
     project as globalinteractionsequence_project
-from ast.globel.globalmessagetransfer import \
+from scribble.ast.globel.globalmessagetransfer import \
     project as globalmessagetransfer_project
-from ast.globel.globalchoice import project as globalchoice_project
-from ast.globel.globalrecursion import project as globalrecursion_project
-from ast.globel.globalcontinue import project as globalcontinue_project
-from ast.globel.globalparallel import project as globalparallel_project
-from ast.globel.globalinterruptible import \
+from scribble.ast.globel.globalchoice import project as globalchoice_project
+from scribble.ast.globel.globalrecursion import project as globalrecursion_project
+from scribble.ast.globel.globalcontinue import project as globalcontinue_project
+from scribble.ast.globel.globalparallel import project as globalparallel_project
+from scribble.ast.globel.globalinterruptible import \
     project as globalinterruptible_project
-from ast.globel.globaldo import project as globaldo_project
+from scribble.ast.globel.globaldo import project as globaldo_project
 
 
 # Like the other Visitors, the pattern is the "named" (entry) method (i.e.

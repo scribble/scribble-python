@@ -1,7 +1,7 @@
-import scrib_constants as constants
-import scrib_util as util
+import scribble.scrib_constants as constants
+import scribble.scrib_util as util
 
-from ast.payloadelement import (
+from scribble.ast.payloadelement import (
     get_annotation as payloadelement_get_annotation,
     get_type as payloadelement_get_type,
     EMPTY_ANNOTATION as payloadelement_EMPTY_ANNOTATION,
@@ -42,10 +42,10 @@ def check_wellformedness(checker, node_):
             context = context.add_annotation(annot)
 
       # Section 4.5 -- Visible payload types
-        if payloadtype not in context.get_visible_payloads().keys():
+        if payloadtype not in list(context.get_visible_payloads().keys()):
             # "type" parameters
             # Section 4.5 -- Bound (type) parameter
-            if payloadtype not in context.get_parameters().keys():
+            if payloadtype not in list(context.get_parameters().keys()):
                 util.report_error("Bad payload type: " + payloadtype)
             # Section 4.5 -- type parameter
             if context.get_parameter(payloadtype) != \
