@@ -1,7 +1,7 @@
-import scrib_constants as constants
-import scrib_util as util
+import scribble.scrib_constants as constants
+import scribble.scrib_util as util
 
-from ast.node import Node as Node
+from scribble.ast.node import Node as Node
 
 
 OPTIONAL_ALIAS_INDEX = 0

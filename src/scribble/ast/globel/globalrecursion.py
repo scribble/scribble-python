@@ -1,7 +1,7 @@
-import scrib_constants as constants
-import scrib_util as util
+import scribble.scrib_constants as constants
+import scribble.scrib_util as util
 
-from ast.globel.globalprotocolblock import \
+from scribble.ast.globel.globalprotocolblock import \
     pretty_print as globalprotocolblock_pretty_print
 
 
@@ -54,7 +54,7 @@ def check_wellformedness_enter(checker, node_):
     # not bound
     #reclab = get_label(node_)
     reclab = context_.get_current_scope() + '.' + get_label(node_)
-    if reclab in context_.peek_recursion_labels().keys():
+    if reclab in list(context_.peek_recursion_labels().keys()):
         util.report_error("Bad recursion label: " + reclab)
 
 

@@ -1,15 +1,15 @@
-import scrib_constants as constants
-import scrib_util as util
+import scribble.scrib_constants as constants
+import scribble.scrib_util as util
 
-from ast.messagesignature import (
+from scribble.ast.messagesignature import (
     check_wellformedness as messagesignature_check_wellformedness,
     get_operator as messagesignature_get_operator,
     pretty_print as messagesignature_pretty_print
 )
 
-from ast.parameter import get_parameter_name as parameter_get_parameter_name
+from scribble.ast.parameter import get_parameter_name as parameter_get_parameter_name
 
-from ast.role import get_role_name as role_get_name
+from scribble.ast.role import get_role_name as role_get_name
 
 
 INTERRUPT_ROLE_INDEX = 0
@@ -37,7 +37,7 @@ def check_wellformedness(checker, node_):
     if not context_.is_role_declared(subj):
         util.report_error("Bad interrupt role: " + subj)
 
-    tmp = context_.get_operators().items()
+    tmp = list(context_.get_operators().items())
     for sig in sigs:
         if util.get_node_type(sig) == constants.MESSAGE_SIGNATURE_NODE_TYPE:
             #tmp = context_.get_operators().items()

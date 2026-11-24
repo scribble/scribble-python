@@ -1,27 +1,27 @@
-import scrib_constants as constants
-import scrib_collections as collections
-import scrib_util as util
+import scribble.scrib_constants as constants
+import scribble.scrib_collections as collections
+import scribble.scrib_util as util
 
-from visit.abstractcontext import AbstractContext as AbstractContext
+from scribble.visit.abstractcontext import AbstractContext as AbstractContext
 
-from ast.globel.globalprotocoldecl import (
+from scribble.ast.globel.globalprotocoldecl import (
     get_parameter_names as globalprotocoldecl_get_parameters,
     get_role_name as globalprotocoldecl_get_roles
 )
 
-from ast.globel.globalprotocoldef import (
+from scribble.ast.globel.globalprotocoldef import (
     get_full_name as globalprotocoldef_get_full_name,
     ROOT_SCOPE as globalprotocoldef_ROOT_SCOPE,
     get_declared_parameters as globalprotocoldef_get_parameters,
     get_declared_roles as globalprotocoldef_get_roles
 )
 
-from ast.globel.globalchoice import (
+from scribble.ast.globel.globalchoice import (
     get_subject as globalchoice_get_subject,
     DUMMY_ENABLING_OP as globalchoice_DUMMY_ENABLING_OP
 )
 
-from ast.globel.globaldo import (
+from scribble.ast.globel.globaldo import (
     get_scope as globaldo_get_scope,
     get_target_full_name as globaldo_get_target_full_name,
     EMPTY_SCOPE_NAME as globaldo_EMPTY_SCOPE_NAME,
@@ -29,10 +29,10 @@ from ast.globel.globaldo import (
     get_argument_args as globaldo_get_argument_args
 )
 
-from ast.globel.globalinterruptible import \
+from scribble.ast.globel.globalinterruptible import \
     get_scope as globalinterruptible_get_scope
 
-from ast.globel.globalrecursion import \
+from scribble.ast.globel.globalrecursion import \
     get_label as globalrecursion_get_label
 
 
@@ -229,15 +229,15 @@ class Context(AbstractContext):
         return role in self.get_roles()
 
     def is_role_enabled(self, role):
-        return role in self._enabled_roles.keys()
+        return role in list(self._enabled_roles.keys())
 
     def is_operator_seen(self, src, dest, op):
-        return (src, dest) in self._operators.keys() and \
+        return (src, dest) in list(self._operators.keys()) and \
             op in self._operators[(src, dest)]
 
     def is_recursion_label_declared(self, lab):
         labs = self.peek_recursion_labels()
-        return lab in labs.keys() and labs[lab]
+        return lab in list(labs.keys()) and labs[lab]
 
     def is_continue_label_seen(self, lab):
         return lab in self._cont_labs
@@ -268,7 +268,7 @@ class Context(AbstractContext):
         return self._do_stack[len(self._do_stack)-1]
     
     def has_projection(self, fullname):
-        return fullname in self._projections.keys()
+        return fullname in list(self._projections.keys())
     
 
     #######################################################
@@ -365,7 +365,7 @@ class Context(AbstractContext):
 
     def add_source(self, fqmn, filepath):
         clone = self.clone()
-        if fqmn not in clone._sources.keys():
+        if fqmn not in list(clone._sources.keys()):
             clone._sources[fqmn] = filepath
         else:
             # raise Exception("Shouldn't get in here: ", fqmn, filepath)
@@ -373,7 +373,7 @@ class Context(AbstractContext):
         return clone
 
     def add_module(self, fmn, module_):
-        if fmn not in self._modules.keys():
+        if fmn not in list(self._modules.keys()):
             clone = self.clone()
             clone._modules[fmn] = module_
             return clone
@@ -383,7 +383,7 @@ class Context(AbstractContext):
 
     # Update Context after an AST is modified by some pass
     def replace_module(self, fmn, module_):
-        if fmn in self._modules.keys():
+        if fmn in list(self._modules.keys()):
             clone = self.clone()
             clone._modules[fmn] = module_
             return clone
@@ -393,7 +393,7 @@ class Context(AbstractContext):
 
     # HACK: local name mangling for local context visiting
     def rename_visible_global(self, old, new):
-        if old in self._visible_globals.keys():
+        if old in list(self._visible_globals.keys()):
             clone = self.clone()
             tmp = clone._visible_globals[old] 
             del(clone._visible_globals[old])
@@ -410,7 +410,7 @@ class Context(AbstractContext):
             
 
     def add_visible_module(self, n, module_):
-        if n not in self._visible_modules.keys():
+        if n not in list(self._visible_modules.keys()):
             clone = self.clone()
             clone._visible_modules[n] = module_
             return clone
@@ -419,7 +419,7 @@ class Context(AbstractContext):
             return self
 
     def add_visible_payload(self, n, member):
-        if n not in self._visible_payloads.keys():
+        if n not in list(self._visible_payloads.keys()):
             clone = self.clone()
             clone._visible_payloads[n] = member
             return clone
@@ -428,7 +428,7 @@ class Context(AbstractContext):
             return self
 
     def add_visible_global(self, n, member):
-        if n not in self._visible_globals.keys():
+        if n not in list(self._visible_globals.keys()):
             clone = self.clone()
             clone._visible_globals[n] = member
             return clone
@@ -437,7 +437,7 @@ class Context(AbstractContext):
             return self
 
     def add_visible_local(self, n, member):
-        if n not in self._visible_locals.keys():
+        if n not in list(self._visible_locals.keys()):
             clone = self.clone()
             clone._visible_locals[n] = member
             return clone
@@ -480,7 +480,7 @@ class Context(AbstractContext):
         """if op == None:
             raise Exception("Shouldn't get in here: ", role_, op)"""
         clone = self.clone()
-        roles = clone._enabled_roles.keys()
+        roles = list(clone._enabled_roles.keys())
         if role_ not in roles:  # or clone.enabledroles[role_] is None:
             clone._enabled_roles[role_] = set([op])
         else:
@@ -491,14 +491,14 @@ class Context(AbstractContext):
 
     def add_operator(self, src, dest, op):
         clone = self.clone()
-        if (src, dest) not in clone._operators.keys():
+        if (src, dest) not in list(clone._operators.keys()):
             clone._operators[(src, dest)] = set([])
         clone._operators[(src, dest)].add(op)
         return clone
 
     def add_recursion_label(self, lab):
         # labs = self.recLabs[len(self.recLabs) - 1]
-        if lab not in self.peek_recursion_labels().keys():
+        if lab not in list(self.peek_recursion_labels().keys()):
             clone = self.clone()
             labs = clone.peek_recursion_labels()
             labs[lab] = True
@@ -910,7 +910,7 @@ class Context(AbstractContext):
     # Add do-instance to the do-chain ("call stack")
     def _add_do_instance(self, proto, roles, params):
         do_frame = self.peek_do_chain()
-        if proto not in do_frame.keys():
+        if proto not in list(do_frame.keys()):
             do_frame[proto] = set([])
         do_frame[proto].add(_make_do_chain_value(roles, params))
 
@@ -922,7 +922,7 @@ class Context(AbstractContext):
     
     def do_instance_in_chain(self, proto, roles, params):
         do_frame = self.peek_do_chain()
-        if proto not in do_frame.keys():
+        if proto not in list(do_frame.keys()):
             return False
         return _make_do_chain_value(roles, params) in do_frame[proto]
 
@@ -931,7 +931,7 @@ class Context(AbstractContext):
 # s is a (list of (dict with boolean range values))
 def _append_disabled_frame(s, v):
     tmp = {}
-    for k in s[len(s)-1].keys():
+    for k in list(s[len(s)-1].keys()):
         tmp[k] = v
     s.append(tmp)  # Side effecting s
 

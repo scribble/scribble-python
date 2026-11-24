@@ -1,5 +1,5 @@
-import scrib_constants as constants
-import scrib_util as util
+import scribble.scrib_constants as constants
+import scribble.scrib_util as util
 
 
 #class Visitor:  # old-style class for Python 2.x

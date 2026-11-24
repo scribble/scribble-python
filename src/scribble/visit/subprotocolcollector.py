@@ -1,4 +1,4 @@
-from ast.nodefactory import NodeFactory as NodeFactory
+from scribble.ast.nodefactory import NodeFactory as NodeFactory
 
 
 # Factor out local visitor with reachability checker

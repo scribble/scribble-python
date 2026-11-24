@@ -1,32 +1,32 @@
 import copy
 
-import scrib_constants as constants
-import scrib_util as util
+import scribble.scrib_constants as constants
+import scribble.scrib_util as util
 
-from namesubstitutor import NameSubstitutor as NameSubstitutor
-from visibilitybuilder import build_visibility as build_visibility
+from scribble.namesubstitutor import NameSubstitutor as NameSubstitutor
+from scribble.visibilitybuilder import build_visibility as build_visibility
 
 # from visit.traverser_variant import Traverser as Traverser
-from visit.traverser import Traverser as Traverser
+from scribble.visit.traverser import Traverser as Traverser
 
-from ast.module import get_full_name as module_get_full_name
+from scribble.ast.module import get_full_name as module_get_full_name
 
-from ast.globel.globalprotocoldecl import \
+from scribble.ast.globel.globalprotocoldecl import \
     get_child as globalprotocoldecl_get_child
 
-from ast.globel.globalprotocoldef import \
+from scribble.ast.globel.globalprotocoldef import \
     get_block_child as globalprotocoldef_get_block_child
 
-from ast.globel.globalcontinue import (
+from scribble.ast.globel.globalcontinue import (
     get_label as globalcontinue_get_label,
 )
 
-from ast.globel.globalrecursion import (
+from scribble.ast.globel.globalrecursion import (
     get_label as globalrecursion_get_label,
     get_block_child as globalrecursion_get_block_child
  )
 
-from ast.globel.globaldo import (
+from scribble.ast.globel.globaldo import (
     get_target_full_name as globaldo_get_target,
     get_argument_args as globaldo_get_args,
     get_argument_roles as globaldo_get_roles,
@@ -34,19 +34,19 @@ from ast.globel.globaldo import (
     get_roleinstantiationlist_child as globaldo_get_roleinstantiationlist
 )
 
-from ast.globel.globalprotocolblock import \
+from scribble.ast.globel.globalprotocolblock import \
     get_globalinteractionsequence_child as globalblock_get_interactionsequence
 
-from ast.globel.globalinteractionsequence import \
+from scribble.ast.globel.globalinteractionsequence import \
     get_children as globalinteractionsequence_get_children
 
-from ast.roleinstantiationlist import \
+from scribble.ast.roleinstantiationlist import \
     get_role_map as roleinstantiationlist_get_map
 
-from ast.argumentlist import \
+from scribble.ast.argumentlist import \
     get_argument_map as argumentlist_get_map
 
-from ast.globel.globalinteractionsequence import \
+from scribble.ast.globel.globalinteractionsequence import \
     traverse as globalinteractionsequence_traverse
 
 
@@ -64,8 +64,8 @@ class Unfolder(Traverser):
     def once_unfold_all(self, node_):
         unfolded = self.traverse(node_)
         
-        print "z: ", util.pretty_print(node_)
-        print "a: ", util.pretty_print(unfolded)
+        print("z: ", util.pretty_print(node_))
+        print("a: ", util.pretty_print(unfolded))
         
         #print "a: ", util.pretty_print(globalprotocoldecl_get_child(unfolded))
         
@@ -286,14 +286,14 @@ class Unfolder(Traverser):
     def _traverse_globalinteractionsequence(self, node_):
         traversed = []
         for child in globalinteractionsequence_get_children(node_):
-            next = self.traverse(child)
-            if util.get_node_type(next) == \
+            next_ = self.traverse(child)
+            if util.get_node_type(next_) == \
                     constants.GLOBAL_INTERACTION_SEQUENCE_NODE_TYPE:
                 # No need to do recursively
-                for c in globalinteractionsequence_get_children(next):
+                for c in globalinteractionsequence_get_children(next_):
                    traversed.append(c)
             else:
-                traversed.append(next)
+                traversed.append(next_)
         return util.antlr_dupnode_and_replace_children(node_, traversed)
 
 

@@ -1,6 +1,6 @@
-import scrib_util as util
+import scribble.scrib_util as util
 
-from ast.local.localnode import LocalNode as LocalNode
+from scribble.ast.local.localnode import LocalNode as LocalNode
 
 """from ast.globel.globalinteractionsequence import (
     context_visitor_enter as globalinteractionsequence_context_visitor_enter,
@@ -57,8 +57,8 @@ class LocalInteractionSequence(LocalNode):
 def traverse(traverser, node_):
     traversed = []
     for child in get_children(node_):
-        next = traverser.traverse(child)
-        traversed.append(next)
+        next_ = traverser.traverse(child)
+        traversed.append(next_)
     rebuilt = util.antlr_dupnode_and_replace_children(node_, traversed)
     return rebuilt
 

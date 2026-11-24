@@ -1,19 +1,19 @@
-import scrib_constants as constants
-import scrib_util as util
+import scribble.scrib_constants as constants
+import scribble.scrib_util as util
 
 
-from ast.globel.globalprotocolblock import \
+from scribble.ast.globel.globalprotocolblock import \
     pretty_print as globalprotocolblock_pretty_print
 
-from ast.globel.globalprotocoldecl import (
+from scribble.ast.globel.globalprotocoldecl import (
     get_full_name as globalprotocoldecl_get_full_name,
     get_roledecllist_child as globalprotocoldecl_get_roledecllist_child,
     get_parameterdecllist_child as globalprotocoldecl_get_parameterdecllist_child
 )
 
-from ast.roledecllist import get_role_names as roledecllist_get_role_names
+from scribble.ast.roledecllist import get_role_names as roledecllist_get_role_names
 
-from ast.parameterdecllist import \
+from scribble.ast.parameterdecllist import \
     get_parameter_names as parameterdecllist_get_parameter_names
 
 

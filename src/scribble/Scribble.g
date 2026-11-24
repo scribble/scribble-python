@@ -2,7 +2,7 @@ grammar Scribble;
 
 options
 {
-	language = Python;
+	language = Python3;
 	output = AST;
 	ASTLabelType = CommonTree;
 	backtrack = true;  // backtracking disabled by default? Is it bad to rely on this option?

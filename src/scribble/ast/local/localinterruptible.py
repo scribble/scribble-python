@@ -1,12 +1,12 @@
-import scrib_constants as constants
-import scrib_util as util
+import scribble.scrib_constants as constants
+import scribble.scrib_util as util
 
-from ast.local.localnode import LocalNode as LocalNode
+from scribble.ast.local.localnode import LocalNode as LocalNode
 
-from ast.local.localprotocolblock import \
+from scribble.ast.local.localprotocolblock import \
     pretty_print as localprotocolblock_pretty_print
-from ast.local.localthrow import pretty_print as localthrow_pretty_print
-from ast.local.localcatch import pretty_print as localcatch_pretty_print
+from scribble.ast.local.localthrow import pretty_print as localthrow_pretty_print
+from scribble.ast.local.localcatch import pretty_print as localcatch_pretty_print
 
 
 EMPTY_LOCAL_THROW = 'EMPTY_LOCAL_THROW'

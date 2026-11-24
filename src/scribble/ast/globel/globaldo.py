@@ -1,10 +1,10 @@
-import scrib_constants as constants
-import scrib_util as util
+import scribble.scrib_constants as constants
+import scribble.scrib_util as util
 
-from visibilitybuilder import build_visibility as build_visibility
-from namesubstitutor import NameSubstitutor
+from scribble.visibilitybuilder import build_visibility as build_visibility
+from scribble.namesubstitutor import NameSubstitutor
 
-from ast.argumentlist import (
+from scribble.ast.argumentlist import (
     is_empty as argumentlist_is_empty,
     check_wellformedness as argumentlist_check_wellformedness,
     #get_argument_children as argumentlist_get_argument_children,
@@ -13,27 +13,27 @@ from ast.argumentlist import (
     get_argument_args as argumentlist_get_args
 )
 
-from ast.module import get_moduledecl_child as module_get_moduledecl_child
-from ast.moduledecl import get_full_name as moduledecl_get_full_name
-from ast.roledecl import get_role_name as roledecl_get_role_name
-from ast.roledecllist import \
+from scribble.ast.module import get_moduledecl_child as module_get_moduledecl_child
+from scribble.ast.moduledecl import get_full_name as moduledecl_get_full_name
+from scribble.ast.roledecl import get_role_name as roledecl_get_role_name
+from scribble.ast.roledecllist import \
     get_roledecl_children as roledecllist_get_roledecl_children
 
-from ast.roleinstantiation import (
+from scribble.ast.roleinstantiation import (
     get_arg as roleinstantiation_get_arg,
     get_parameter as roleinstantiation_get_parameter,
     get_parameter_child as roleinstantiation_get_parameter_child,
     pretty_print as roleinstantiation_pretty_print
 )
 
-from ast.argument import (
+from scribble.ast.argument import (
     get_arg as argument_get_arg,
     get_parameter as argument_get_parameter
     #get_parameter_child as roleinstantiation_get_parameter_child,
     #pretty_print as roleinstantiation_pretty_print
 )
 
-from ast.roleinstantiationlist import (
+from scribble.ast.roleinstantiationlist import (
     check_wellformedness as roleinstantiationlist_check_wellformedness,
     get_roleinstantiation_children as \
         roleinstantiationlist_get_children,
@@ -41,14 +41,14 @@ from ast.roleinstantiationlist import (
     get_role_arguments as roleinstantiationlist_get_roles
 )
 
-from ast.globel.globalprotocoldecl import (
+from scribble.ast.globel.globalprotocoldecl import (
     get_name as globalprotocoldecl_get_name,
     get_child as globalprotocoldecl_get_child,
     get_roledecllist_child as \
         globalprotocoldecl_get_roledecllist_child
 )
 
-from ast.globel.globalprotocoldef import \
+from scribble.ast.globel.globalprotocoldef import \
     get_block_child as globalprotocoldef_get_block_child
 
 
@@ -91,7 +91,7 @@ def context_visitor_enter(cv, node_):
         clone = context_.add_scope(scope)
     do_frame = clone.peek_do_chain()
     fullname = get_target_full_name(clone, node_)
-    if fullname in do_frame.keys():
+    if fullname in list(do_frame.keys()):
         clone = context_.set_do_exitable(False)
     # targetSubstitutor replaces the nested protocol context_ targets with outer
     # ones, so enabledroles etc. are already the correct targets
@@ -121,7 +121,7 @@ def check_wellformedness_enter(checker, node_):
 
     # Section 4.6.10 -- target protocol must be visible
     globals = context_.get_visible_globals()
-    if target not in globals.keys():
+    if target not in list(globals.keys()):
         #tmp = context_.get_current_module() + '.' + target
             # All visible globals should already be collected by
             # VisibilityBuilder now
@@ -137,7 +137,7 @@ def check_wellformedness_enter(checker, node_):
     # singleton parallel, but ignoring that special case for now
     do_frame = context_.peek_do_chain()
     fullname = get_target_full_name(context_, node_)
-    if fullname in do_frame.keys():
+    if fullname in list(do_frame.keys()):
         # Recursive-do to this protocol has been forbidden by entering a
         # parallel context_
         if not do_frame[fullname]:
@@ -250,7 +250,7 @@ def project(projector, node_):
         roles = []
         rd_iter = roledecllist_get_roledecl_children(rd_list).__iter__()
         for ri in roleinstantiationlist_get_children(ri_list):
-            rd = rd_iter.next()
+            rd = next(rd_iter)
             #roles.append(roleinstantiation_pretty_print(ri))  # FIXME: string hack (localdo)
             #tmp = projector.rolemap[roleinstantiation_get_arg(ri)]
             tmp = roleinstantiation_get_arg(ri)
@@ -325,7 +325,7 @@ def get_target_parameter(rd_list, ri_list, rolearg):
     roleparam = None
     rd_iter = roledecllist_get_roledecl_children(rd_list).__iter__()
     for ri in roleinstantiationlist_get_children(ri_list):
-        rd = rd_iter.next()
+        rd = next(rd_iter)
         if roleinstantiation_get_arg(ri) == rolearg:
             if roleinstantiation_get_parameter_child(ri):
                 roleparam = roleinstantiation_get_parameter(ri)

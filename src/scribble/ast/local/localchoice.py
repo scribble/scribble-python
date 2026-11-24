@@ -1,13 +1,13 @@
-import scrib_constants as constants
-import scrib_util as util
+import scribble.scrib_constants as constants
+import scribble.scrib_util as util
 
-from ast.globel.globalchoice import (
+from scribble.ast.globel.globalchoice import (
     traverse_choice as globalchoice_traverse_choice,
     get_subject_child as globalchoice_get_subject_child,
     get_block_children as globalchoice_get_block_children
 )
 
-from ast.local.localnode import LocalNode as LocalNode
+from scribble.ast.local.localnode import LocalNode as LocalNode
 
 
 class LocalChoice(LocalNode):

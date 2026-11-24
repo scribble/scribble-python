@@ -1,6 +1,6 @@
-import scrib_util as util
+import scribble.scrib_util as util
 
-import ast.payload as payload
+import scribble.ast.payload as payload
 
 
 EMPTY_MESSAGE_OP = 'EMPTY_MESSAGE_OP'

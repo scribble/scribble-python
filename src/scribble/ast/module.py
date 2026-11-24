@@ -1,21 +1,21 @@
-import scrib_collections as collections
-import scrib_constants as constants
-import scrib_util as util
+import scribble.scrib_collections as collections
+import scribble.scrib_constants as constants
+import scribble.scrib_util as util
 
-from ast.node import Node as Node
+from scribble.ast.node import Node as Node
 
-from ast.importmodule import (
+from scribble.ast.importmodule import (
     get_declaration_name as importmodule_get_declaration_name,
     pretty_print as importmodule_pretty_print,
     get_full_module_name as importmodule_get_full_name
 )
 
-from ast.moduledecl import (
+from scribble.ast.moduledecl import (
     get_full_name as moduledecl_get_full_name,
     pretty_print as moduledecl_pretty_print
 )
 
-from ast.payloadtypedecl import (
+from scribble.ast.payloadtypedecl import (
     get_declaration_name as payloadtypedecl_get_declaration_name,
     pretty_print as payloadtypedecl_pretty_print
 )
@@ -25,7 +25,7 @@ from ast.payloadtypedecl import (
 #    pretty_print as globalprotocoldecl_pretty_print
 #)
 
-from ast.local.localprotocoldecl import (
+from scribble.ast.local.localprotocoldecl import (
     get_name as localprotocoldecl_get_name,
     pretty_print as localprotocoldecl_pretty_print
 )
@@ -41,7 +41,7 @@ def get_moduledecl_child(node_):
 
 # Moved below "get_moduledecl_child" to resolve circular import
 #
-from ast.globel.globalprotocoldecl import (
+from scribble.ast.globel.globalprotocoldecl import (
     get_name as globalprotocoldecl_get_name,
     pretty_print as globalprotocoldecl_pretty_print
 )

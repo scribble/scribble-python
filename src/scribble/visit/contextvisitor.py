@@ -1,84 +1,84 @@
-import scrib_util as util
+import scribble.scrib_util as util
 
-from visit.context import Context as Context
-from visit.visitor import Visitor as Visitor
+from scribble.visit.context import Context as Context
+from scribble.visit.visitor import Visitor as Visitor
 
 # The following are the AST nodes that use the ContextVisitor enter/visit/leave
 # pattern; other nodes are passed over (they don't affect Context contents)
 
-from ast.roledecllist import (
+from scribble.ast.roledecllist import (
     context_visitor_enter as roledecllist_context_visitor_enter,
     context_visitor_visit as roledecllist_context_visitor_visit,
     context_visitor_leave as roledecllist_context_visitor_leave
 ) 
 
-from ast.parameterdecllist import (
+from scribble.ast.parameterdecllist import (
     context_visitor_enter as parameterdecllist_context_visitor_enter,
     context_visitor_visit as parameterdecllist_context_visitor_visit,
     context_visitor_leave as parameterdecllist_context_visitor_leave
 )
 
-from ast.globel.globalprotocoldecl import (
+from scribble.ast.globel.globalprotocoldecl import (
     context_visitor_enter as globalprotocoldecl_context_visitor_enter,
     context_visitor_visit as globalprotocoldecl_context_visitor_visit,
     context_visitor_leave as globalprotocoldecl_context_visitor_leave
 ) 
 
-from ast.globel.globalprotocoldef import (
+from scribble.ast.globel.globalprotocoldef import (
     context_visitor_enter as globalprotocoldef_context_visitor_enter,
     context_visitor_visit as globalprotocoldef_context_visitor_visit,
     context_visitor_leave as globalprotocoldef_context_visitor_leave
 ) 
 
-from ast.globel.globalprotocolblock import (
+from scribble.ast.globel.globalprotocolblock import (
     context_visitor_enter as globalprotocolblock_context_visitor_enter,
     context_visitor_visit as globalprotocolblock_context_visitor_visit,
     context_visitor_leave as globalprotocolblock_context_visitor_leave
 ) 
 
-from ast.globel.globalinteractionsequence import (
+from scribble.ast.globel.globalinteractionsequence import (
     context_visitor_enter as globalinteractionsequence_context_visitor_enter,
     context_visitor_visit as globalinteractionsequence_context_visitor_visit,
     context_visitor_leave as globalinteractionsequence_context_visitor_leave
 ) 
 
-from ast.globel.globalmessagetransfer import ( 
+from scribble.ast.globel.globalmessagetransfer import ( 
     context_visitor_enter as globalmessagetransfer_context_visitor_enter,
     context_visitor_visit as globalmessagetransfer_context_visitor_visit,
     context_visitor_leave as globalmessagetransfer_context_visitor_leave
 ) 
 
-from ast.globel.globalchoice import ( 
+from scribble.ast.globel.globalchoice import ( 
     context_visitor_enter as globalchoice_context_visitor_enter,
     context_visitor_visit as globalchoice_context_visitor_visit,
     context_visitor_leave as globalchoice_context_visitor_leave
 ) 
 
-from ast.globel.globalrecursion import ( 
+from scribble.ast.globel.globalrecursion import ( 
     context_visitor_enter as globalrecursion_context_visitor_enter,
     context_visitor_visit as globalrecursion_context_visitor_visit,
     context_visitor_leave as globalrecursion_context_visitor_leave
 ) 
 
-from ast.globel.globalcontinue import ( 
+from scribble.ast.globel.globalcontinue import ( 
     context_visitor_enter as globalcontinue_context_visitor_enter,
     context_visitor_visit as globalcontinue_context_visitor_visit,
     context_visitor_leave as globalcontinue_context_visitor_leave
 ) 
 
-from ast.globel.globalparallel import ( 
+from scribble.ast.globel.globalparallel import ( 
     context_visitor_enter as globalparallel_context_visitor_enter,
     context_visitor_visit as globalparallel_context_visitor_visit,
     context_visitor_leave as globalparallel_context_visitor_leave
 ) 
 
-from ast.globel.globalinterruptible import ( 
+from scribble.ast.globel.globalinterruptible import ( 
     context_visitor_enter as globalinterruptible_context_visitor_enter,
     context_visitor_visit as globalinterruptible_context_visitor_visit,
     context_visitor_leave as globalinterruptible_context_visitor_leave
 ) 
 
-from ast.globel.globaldo import ( 
+from scribble.ast.globel.globaldo import ( 
     context_visitor_enter as globaldo_context_visitor_enter,
     context_visitor_visit as globaldo_context_visitor_visit,
     context_visitor_leave as globaldo_context_visitor_leave

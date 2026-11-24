@@ -6,15 +6,15 @@
 # Could fit into Visitor/Traverser pattern, but quite simple so mabe unnecessary
 
 
-import scrib_constants as constants
-import scrib_util as util
+from . import scrib_constants as constants
+from . import scrib_util as util
 
-from ast.importmodule import (
+from .ast.importmodule import (
     get_full_module_name as importmodule_get_full_module_name,
     get_declaration_name as importmodule_get_declaration_name
 )
 
-from ast.module import (
+from .ast.module import (
     get_moduledecl_child as module_get_moduledecl_child,
     get_importmember_children as module_get_importmember_children,
     get_importmodule_children as module_get_importmodule_children,
@@ -24,15 +24,15 @@ from ast.module import (
     get_localprotocoldecl_children as module_get_localprotocoldecl_children
 )
 
-from ast.moduledecl import get_full_name as moduledecl_get_full_name
+from .ast.moduledecl import get_full_name as moduledecl_get_full_name
 
-from ast.payloadtypedecl import \
+from .ast.payloadtypedecl import \
     get_declaration_name as payloadtypedecl_get_declaration_name
 
-from ast.globel.globalprotocoldecl import \
+from .ast.globel.globalprotocoldecl import \
     get_name as globalprotocoldecl_get_name
 
-from ast.local.localprotocoldecl import \
+from .ast.local.localprotocoldecl import \
     get_name as localprotocoldecl_get_name
 
 
@@ -72,7 +72,7 @@ def _get_imported_modules(context, module_):
         # Section 4.1.1 -- imported module_ referred to by declaration name
         
         # FIXME: transitively import modules -- not working for project all (and do well-formedness?)
-        if dn not in context.get_visible_modules().keys():
+        if dn not in list(context.get_visible_modules().keys()):
             context = context.add_visible_module(dn, m)
             context = _get_module_members(context, dn, m)
     return context

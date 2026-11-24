@@ -1,13 +1,13 @@
-import scrib_constants as constants
-import scrib_util as util
+import scribble.scrib_constants as constants
+import scribble.scrib_util as util
 
-from ast.messagesignature import \
+from scribble.ast.messagesignature import \
     pretty_print as messagesignature_pretty_print
-from ast.role import get_role_name as role_get_role_name
-from ast.parameter import \
+from scribble.ast.role import get_role_name as role_get_role_name
+from scribble.ast.parameter import \
     pretty_print as parameter_pretty_print
 
-from ast.local.localnode import LocalNode as LocalNode
+from scribble.ast.local.localnode import LocalNode as LocalNode
 
 
 FIRST_RECEIVER_INDEX = 0

@@ -1,6 +1,6 @@
-from ast.node import Node as Node
+from scribble.ast.node import Node as Node
 
-from ast.role import get_role_name as role_get_name
+from scribble.ast.role import get_role_name as role_get_name
 
 
 NAME_INDEX = 0

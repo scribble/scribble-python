@@ -1,9 +1,9 @@
-import scrib_constants as constants
-import scrib_util as util
+import scribble.scrib_constants as constants
+import scribble.scrib_util as util
 
-from ast.node import Node as Node
+from scribble.ast.node import Node as Node
 
-from ast.role import get_role_name as role_get_name;
+from scribble.ast.role import get_role_name as role_get_name;
 
 
 ARGUMENT_INDEX = 0

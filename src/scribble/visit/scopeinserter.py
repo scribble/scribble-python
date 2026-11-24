@@ -1,10 +1,10 @@
 import copy
 
-import scrib_util as util
+import scribble.scrib_util as util
 
-from visit.traverser import Traverser as Traverser
+from scribble.visit.traverser import Traverser as Traverser
 
-from ast.globel.globalinterruptible import (
+from scribble.ast.globel.globalinterruptible import (
     get_scope as globalinterruptible_get_scope,
     EMPTY_SCOPE_NAME as globalinterruptible_EMPTY_SCOPE_NAME,
     get_scope_child as globalinterruptible_get_scope_child,
@@ -12,7 +12,7 @@ from ast.globel.globalinterruptible import (
     get_interrupt_children as globalinterruptible_get_interrupt_children
 )
 
-from ast.globel.globaldo import (
+from scribble.ast.globel.globaldo import (
     get_scope as globaldo_get_scope,
     EMPTY_SCOPE_NAME as globaldo_EMPTY_SCOPE_NAME,
     get_scope_child as globaldo_get_scope_child,

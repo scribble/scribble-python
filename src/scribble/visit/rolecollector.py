@@ -1,15 +1,15 @@
-from visit.traverser import Traverser as Traverser
+from scribble.visit.traverser import Traverser as Traverser
 
-from ast.globel.globalmessagetransfer import (
+from scribble.ast.globel.globalmessagetransfer import (
     get_source as globalmessagetransfer_get_source,
     get_destinations as globalmessagetransfer_get_destinations
 )
     
-from ast.roleinstantiation import get_arg as roleinstantiation_get_arg
+from scribble.ast.roleinstantiation import get_arg as roleinstantiation_get_arg
 
-from ast.globel.globalchoice import get_subject as globalchoice_get_subject
+from scribble.ast.globel.globalchoice import get_subject as globalchoice_get_subject
 
-from ast.globel.globalinterrupt import get_role as globalinterrupt_get_role
+from scribble.ast.globel.globalinterrupt import get_role as globalinterrupt_get_role
 
 
 # Should only be run on Block nodes or smaller

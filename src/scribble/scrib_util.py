@@ -10,48 +10,48 @@ from antlr3 import (
 from ScribbleLexer import ScribbleLexer as ScribbleLexer
 from ScribbleParser import ScribbleParser as ScribbleParser
 
-import scrib_constants as constants
+from . import scrib_constants as constants
 
-from visit.commonerrornodechecker import \
+from .visit.commonerrornodechecker import \
     CommonErrorNodeChecker as CommonErrorNodeChecker
 
-from ast.globel.globalprotocoldef import \
+from .ast.globel.globalprotocoldef import \
     pretty_print as globalprotocoldef_pretty_print
-from ast.globel.globalprotocolblock import \
+from .ast.globel.globalprotocolblock import \
     pretty_print as globalprotocolblock_pretty_print
-from ast.globel.globalchoice import \
+from .ast.globel.globalchoice import \
     pretty_print as globalchoice_pretty_print
-from ast.globel.globalcontinue import \
+from .ast.globel.globalcontinue import \
     pretty_print as globalcontinue_pretty_print
-from ast.globel.globaldo import \
+from .ast.globel.globaldo import \
     pretty_print as globaldo_pretty_print
-from ast.globel.globalinterruptible import \
+from .ast.globel.globalinterruptible import \
     pretty_print as globalinterruptible_pretty_print
-from ast.globel.globalmessagetransfer import \
+from .ast.globel.globalmessagetransfer import \
     pretty_print as globalmessagetransfer_pretty_print
-from ast.globel.globalparallel import \
+from .ast.globel.globalparallel import \
     pretty_print as globalparallel_pretty_print
-from ast.globel.globalrecursion import \
+from .ast.globel.globalrecursion import \
     pretty_print as globalrecursion_pretty_print
 
-from ast.local.localsend  import pretty_print as localsend_pretty_print
-from ast.local.localreceive  import pretty_print as localreceive_pretty_print
+from .ast.local.localsend  import pretty_print as localsend_pretty_print
+from .ast.local.localreceive  import pretty_print as localreceive_pretty_print
 """from ast.local.localchoice import \
     pretty_print as localchoice_pretty_print
-from ast.local.localcontinue import \
+from scribble.ast.local.localcontinue import \
     pretty_print as localcontinue_pretty_print
-from ast.local.localdo import \
+from scribble.ast.local.localdo import \
     pretty_print as localdo_pretty_print
-from ast.local.localinterruptible import \
+from scribble.ast.local.localinterruptible import \
     pretty_print as localinterruptible_pretty_print
-from ast.local.localmessagetransfer import \
+from scribble.ast.local.localmessagetransfer import \
     pretty_print as localmessagetransfer_pretty_print
-from ast.local.localparallel import \
+from scribble.ast.local.localparallel import \
     pretty_print as localparallel_pretty_print
-from ast.local.localrecursion import \
+from scribble.ast.local.localrecursion import \
     pretty_print as localrecursion_pretty_print"""
 
-from visit.unfolder import Unfolder as Unfolder
+from .visit.unfolder import Unfolder as Unfolder
 
 
 """def getCurrentFunctionName():
@@ -64,7 +64,7 @@ def get_node_type(node_):
     return node_.getText()  # gets the token text?
 
 def set_node_type(node_, type_):
-    node_.token.setText(type_)
+    node_.token.text = type_
 
 def filter_node_types(nodes, type_):
     res = []
@@ -88,10 +88,10 @@ def antlr_dupnode_and_replace_children(node_, children):
 # Tool feedback
 
 def report_warning(message):
-    print message
+    print(message)
 
 def report_error(message):
-    print message
+    print(message)
     sys.exit(0)  # Not a failure
 
 
@@ -123,10 +123,10 @@ def load_file_and_parse_module(filepath):
         checker._check_for_errornode(tree)
         return tree
     except IOError as e:
-        print e
+        print(e)
         sys.exit(1)
     except RecognitionException as e:
-        print e
+        print(e)
         sys.exit(1)
     # except Exception as e:  # Failed parse doesn't seem to throw any exceptions
         # traceback.print_stack()
@@ -142,7 +142,7 @@ def write_to_file(filepath, text):
         with open(filepath, 'w') as file:
             file.write(text)
     except Exception as e:
-        print "Write to file failed: ", e
+        print("Write to file failed: ", e)
         sys.exit(1)
 
 
@@ -259,7 +259,7 @@ def pretty_print(node_):
 def replace_in_list(l, map):
     ll = []
     for x in l:
-        if x in map.keys():
+        if x in list(map.keys()):
             ll.append(map[x])
         else:
             ll.append(x)

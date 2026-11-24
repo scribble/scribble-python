@@ -1,9 +1,9 @@
-import scrib_util as util
+import scribble.scrib_util as util
 
-from visit.contextvisitor import ContextVisitor as ContextVisitor
-from visit.rolecollector import RoleCollector as RoleCollector
+from scribble.visit.contextvisitor import ContextVisitor as ContextVisitor
+from scribble.visit.rolecollector import RoleCollector as RoleCollector
 
-from ast.importmodule import (
+from scribble.ast.importmodule import (
     check_wellformedness_enter as importmodule_check_wellformedness_enter,
     check_wellformedness_visit as importmodule_check_wellformedness_visit,
     check_wellformedness_leave as importmodule_check_wellformedness_leave
@@ -11,50 +11,50 @@ from ast.importmodule import (
 
 # TODO: import members
 
-from ast.module import ( 
+from scribble.ast.module import ( 
     check_wellformedness_enter as module_check_wellformedness_enter,
     check_wellformedness_visit as module_check_wellformedness_visit,
     check_wellformedness_leave as module_check_wellformedness_leave
 )
 
-from ast.moduledecl import (
+from scribble.ast.moduledecl import (
     check_wellformedness_enter as moduledecl_check_wellformedness_enter,
     check_wellformedness_visit as moduledecl_check_wellformedness_visit,
     check_wellformedness_leave as moduledecl_check_wellformedness_leave
 )
 
-from ast.parameterdecllist import ( 
+from scribble.ast.parameterdecllist import ( 
     check_wellformedness_enter as parameterdecllist_check_wellformedness_enter,
     check_wellformedness_visit as parameterdecllist_check_wellformedness_visit,
     check_wellformedness_leave as parameterdecllist_check_wellformedness_leave
 )
 
-from ast.payloadtypedecl import ( 
+from scribble.ast.payloadtypedecl import ( 
     check_wellformedness_enter as payloadtypedecl_check_wellformedness_enter,
     check_wellformedness_visit as payloadtypedecl_check_wellformedness_visit,
     check_wellformedness_leave as payloadtypedecl_check_wellformedness_leave
 )
 
-from ast.roledecllist import ( 
+from scribble.ast.roledecllist import ( 
     check_wellformedness_enter as roledecllist_check_wellformedness_enter,
     check_wellformedness_visit as roledecllist_check_wellformedness_visit,
     check_wellformedness_leave as roledecllist_check_wellformedness_leave
 )
 
-from ast.globel.globalprotocoldecl import ( 
+from scribble.ast.globel.globalprotocoldecl import ( 
     get_child as globalprotocoldecl_get_child,
     check_wellformedness_enter as globalprotocoldecl_check_wellformedness_enter,
     check_wellformedness_visit as globalprotocoldecl_check_wellformedness_visit,
     check_wellformedness_leave as globalprotocoldecl_check_wellformedness_leave
 )
 
-from ast.globel.globalprotocoldef import ( 
+from scribble.ast.globel.globalprotocoldef import ( 
     check_wellformedness_enter as globalprotocoldef_check_wellformedness_enter,
     check_wellformedness_visit as globalprotocoldef_check_wellformedness_visit,
     check_wellformedness_leave as globalprotocoldef_check_wellformedness_leave
 )
 
-from ast.globel.globalprotocolblock import ( 
+from scribble.ast.globel.globalprotocolblock import ( 
     check_wellformedness_enter as \
         globalprotocolblock_check_wellformedness_enter,
     check_wellformedness_visit as \
@@ -63,7 +63,7 @@ from ast.globel.globalprotocolblock import (
         globalprotocolblock_check_wellformedness_leave
 )
 
-from ast.globel.globalinteractionsequence import ( 
+from scribble.ast.globel.globalinteractionsequence import ( 
     check_wellformedness_enter as \
         globalinteractionsequence_check_wellformedness_enter,
     check_wellformedness_visit as \
@@ -72,7 +72,7 @@ from ast.globel.globalinteractionsequence import (
         globalinteractionsequence_check_wellformedness_leave
 )
 
-from ast.globel.globalmessagetransfer import ( 
+from scribble.ast.globel.globalmessagetransfer import ( 
     check_wellformedness_enter as \
         globalmessagetransfer_check_wellformedness_enter,
     check_wellformedness_visit as \
@@ -81,31 +81,31 @@ from ast.globel.globalmessagetransfer import (
         globalmessagetransfer_check_wellformedness_leave
 )
 
-from ast.globel.globalchoice import ( 
+from scribble.ast.globel.globalchoice import ( 
     check_wellformedness_enter as globalchoice_check_wellformedness_enter,
     check_wellformedness_visit as globalchoice_check_wellformedness_visit,
     check_wellformedness_leave as globalchoice_check_wellformedness_leave
 )
 
-from ast.globel.globalrecursion import ( 
+from scribble.ast.globel.globalrecursion import ( 
     check_wellformedness_enter as globalrecursion_check_wellformedness_enter,
     check_wellformedness_visit as globalrecursion_check_wellformedness_visit,
     check_wellformedness_leave as globalrecursion_check_wellformedness_leave
 )
 
-from ast.globel.globalcontinue import ( 
+from scribble.ast.globel.globalcontinue import ( 
     check_wellformedness_enter as globalcontinue_check_wellformedness_enter,
     check_wellformedness_visit as globalcontinue_check_wellformedness_visit,
     check_wellformedness_leave as globalcontinue_check_wellformedness_leave
 )
 
-from ast.globel.globalparallel import ( 
+from scribble.ast.globel.globalparallel import ( 
     check_wellformedness_enter as globalparallel_check_wellformedness_enter,
     check_wellformedness_visit as globalparallel_check_wellformedness_visit,
     check_wellformedness_leave as globalparallel_check_wellformedness_leave
 )
 
-from ast.globel.globalinterruptible import ( 
+from scribble.ast.globel.globalinterruptible import ( 
     check_wellformedness_enter as \
         globalinterruptible_check_wellformedness_enter,
     check_wellformedness_visit as \
@@ -114,15 +114,15 @@ from ast.globel.globalinterruptible import (
         globalinterruptible_check_wellformedness_leave
 )
 
-from ast.globel.globaldo import ( 
+from scribble.ast.globel.globaldo import ( 
     check_wellformedness_enter as globaldo_check_wellformedness_enter,
     check_wellformedness_visit as globaldo_check_wellformedness_visit,
     check_wellformedness_leave as globaldo_check_wellformedness_leave
     #get_projected_member_name as globaldo_get_projected_member_name
 )
 
-from visit.projector import Projector as Projector
-from visit.reachabilitychecker import ReachabilityChecker
+from scribble.visit.projector import Projector as Projector
+from scribble.visit.reachabilitychecker import ReachabilityChecker
 
 
 # Implementation is coupled to global protocols

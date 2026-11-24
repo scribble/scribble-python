@@ -1,4 +1,4 @@
-import scrib_util as util
+from . import scrib_util as util
 
 
 # Clones list/set/dict structures recursively; otherwise returns identity
@@ -43,6 +43,6 @@ def clone_dict_aux(dict_):
     if not isinstance(dict_, dict):
         util.report_error("Expected dict, not: " + type(dict_))
     clone = {}
-    for k in dict_.keys():
+    for k in list(dict_.keys()):
         clone[clone_collection(k)] = clone_collection(dict_[k])
     return clone

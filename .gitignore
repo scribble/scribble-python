@@ -18,6 +18,9 @@ develop-eggs
 lib
 lib64
 
+# Migration scratch/baseline output
+.migration/
+
 # Installer logs
 pip-log.txt
 
@@ -28,6 +31,9 @@ nosetests.xml
 
 # Translations
 *.mo
+
+# Generated parser (run/scribblec-build)
+parser/
 
 # Mr Developer
 .mr.developer.cfg

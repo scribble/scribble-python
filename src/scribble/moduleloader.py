@@ -1,14 +1,14 @@
 # For loading all potential module dependencies of a module
 
-import scrib_constants as constants
-import scrib_util as util
+from . import scrib_constants as constants
+from . import scrib_util as util
 
-from visit.context import Context as Context
+from .visit.context import Context as Context
 
-from ast.importmodule import \
+from .ast.importmodule import \
     get_full_module_name as importmodule_get_full_module_name
 
-from ast.module import (
+from .ast.module import (
     get_moduledecl_child as module_get_moduledecl_child,
     get_importmember_children as module_get_importmember_children,
     get_importmodule_children as module_get_importmodule_children,
@@ -17,18 +17,18 @@ from ast.module import (
     get_localprotocoldecl_children as module_get_localprotocoldecl_children
 )
 
-from ast.moduledecl import (
+from .ast.moduledecl import (
     check_filename as moduledecl_check_file_name,
     get_full_name as moduledecl_get_full_name
 )
 
-from ast.payloadtypedecl import \
+from .ast.payloadtypedecl import \
     get_declaration_name as payloadtypedecl_get_declaration_name
 
-from ast.globel.globalprotocoldecl import \
+from .ast.globel.globalprotocoldecl import \
     get_name as globalprotocoldecl_get_name
 
-from ast.local.localprotocoldecl import \
+from .ast.local.localprotocoldecl import \
     get_name as localprotocoldecl_get_name
 
 
@@ -58,7 +58,7 @@ def _add_module_and_get_dependencies(context_, filepath, current):
     for i in importmodules:
         fmn = importmodule_get_full_module_name(i)
         # sources and modules keys should match
-        if fmn not in context_.get_modules().keys():
+        if fmn not in list(context_.get_modules().keys()):
             tmp = util.convert_full_module_name_to_filepath(fmn)
             filepath = util.search_importpath_for_file(context_.import_path,
                                                        tmp)

@@ -1,16 +1,16 @@
-import scrib_constants as constants
-import scrib_util as util
+import scribble.scrib_constants as constants
+import scribble.scrib_util as util
 
-from ast.module import get_moduledecl_child as module_get_moduledecl_child
-from ast.moduledecl import get_full_name as moduledecl_get_full_name
+from scribble.ast.module import get_moduledecl_child as module_get_moduledecl_child
+from scribble.ast.moduledecl import get_full_name as moduledecl_get_full_name
 
-from ast.roledecllist import (
+from scribble.ast.roledecllist import (
     get_role_names as roledecllist_get_role_names,
     get_rolemap as roledecllist_get_rolemap,
     pretty_print as roledecllist_pretty_print
 )
 
-from ast.parameterdecllist import (
+from scribble.ast.parameterdecllist import (
     EMPTY_PARAMETER_DECL_LIST as parameterdecllist_EMPTY_PARAMETER_DECL_LIST,
     pretty_print as parameterdecllist_pretty_print,
     get_parameter_names as parameterdecllist_get_param_names

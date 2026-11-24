@@ -1,8 +1,8 @@
-import scrib_util as scrib_util
+import scribble.scrib_util as scrib_util
 
-from ast.node import Node as Node
+from scribble.ast.node import Node as Node
 
-from ast.parameterdecl import (
+from scribble.ast.parameterdecl import (
     get_kind as parameterdecl_get_kind,
     get_declaration_name as parameterdecl_get_declaration_name,
     pretty_print as parameterdecl_pretty_print,
@@ -68,7 +68,7 @@ def check_wellformedness_enter(checker, node_):
         # Section 4.6 -- Global protocol header: distinct param declaration
         # names
         if param in parameters or \
-                param in context_.get_visible_payloads().keys():
+                param in list(context_.get_visible_payloads().keys()):
             scrib_util.report_error("Bad param declaration name: " + \
                                     param)
         parameters.append(param)

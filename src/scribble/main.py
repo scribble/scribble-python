@@ -1,47 +1,47 @@
 import sys
 
-import scrib_constants as constants
-import scrib_util as util
+from . import scrib_constants as constants
+from . import scrib_util as util
 
-from moduleloader import load_modules as load_modules
-from memberloader import load_members as load_members
-from visibilitybuilder import build_visibility as build_visibility
+from .moduleloader import load_modules as load_modules
+from .memberloader import load_members as load_members
+from .visibilitybuilder import build_visibility as build_visibility
 
-from visit.context import Context as Context
-from visit.projector import Projector as Projector
-from visit.scopeinserter import ScopeInserter as ScopeInserter
-from visit.unfolder import Unfolder as Unfolder
-from visit.wellformednesschecker import \
+from .visit.context import Context as Context
+from .visit.projector import Projector as Projector
+from .visit.scopeinserter import ScopeInserter as ScopeInserter
+from .visit.unfolder import Unfolder as Unfolder
+from .visit.wellformednesschecker import \
     WellformednessChecker as WellformednessChecker
-from visit.reachabilitychecker import ReachabilityChecker as ReachabilityChecker
-from visit.subprotocolcollector import \
+from .visit.reachabilitychecker import ReachabilityChecker as ReachabilityChecker
+from .visit.subprotocolcollector import \
     SubprotocolCollector as SubprotocolCollector
 
-from ast.module import (
+from .ast.module import (
     pretty_print as module_pretty_print,
     get_full_name as module_get_full_name,
     project as module_project,
     get_globalprotocoldecl_children as module_get_globalprotocoldecl_children
 )
 
-from ast.globel.globalprotocoldecl import (
+from .ast.globel.globalprotocoldecl import (
     get_role_name as globalprotocoldecl_get_role_names,
     get_full_name as globalprotocoldecl_get_full_name,
     get_roledecllist_child as globalprotocoldecl_get_roledecllist_child
 )
 
-from ast.roledecllist import (
+from .ast.roledecllist import (
     get_roledecl_children as roledecllist_get_roledecl_children,
     get_rolemap as roledecllist_get_rolemap
 )
     
-from ast.roledecl import (
+from .ast.roledecl import (
     get_role_name as roledecl_get_role_name,
     get_alias_name as roledecl_get_alias_name,
     get_declaration_name as roledecl_get_declaration_name
 )
 
-from ast.globel.globaldo import \
+from .ast.globel.globaldo import \
     get_projected_member_name as globaldo_get_projected_member_name
 
 
@@ -121,7 +121,7 @@ def main(argv, otherArg=None):
 # "Compiler" passes: scope insertion; well-formedness checking; projection
 
 def _insert_scopes(context_):
-    for fullname, module in context_.get_modules().items():
+    for fullname, module in list(context_.get_modules().items()):
         si = ScopeInserter()
         new = si.insert_scopes(module)
         context_ = context_.replace_module(fullname, new)
@@ -129,7 +129,7 @@ def _insert_scopes(context_):
 
 
 def _check_wellformedness(context_):
-    for _, module_ in context_.get_modules().items():
+    for _, module_ in list(context_.get_modules().items()):
         clone = context_.clone()
         # Gets fully qualified names of all visible entities
         clone = build_visibility(clone, module_)
@@ -166,7 +166,7 @@ def _check_wellformedness(context_):
 
 
 def _project_all(context_):
-    for _, module_ in context_.get_modules().items():
+    for _, module_ in list(context_.get_modules().items()):
         clone = context_.set_current_module(module_get_full_name(module_))
         clone = build_visibility(clone, module_)
         
@@ -197,7 +197,7 @@ def _project_all(context_):
 
 
 def _check_reachability(context_):
-    for proto, lpd in context_.get_projections().items(): 
+    for proto, lpd in list(context_.get_projections().items()): 
         local_module_name = util.get_full_module_name_from_full_member_name(
                                 proto)
         clone = context_.set_current_module(local_module_name)
@@ -207,7 +207,7 @@ def _check_reachability(context_):
 
 def _output_projections_to_modules(context_, target_globalname, localrole, dir):
     members = context_.get_members()
-    if target_globalname not in members.keys():
+    if target_globalname not in list(members.keys()):
         util.report_error("[Projection] Unknown protocol: " + \
                           target_globalname) #+ ", " + str(members))
     
@@ -266,19 +266,19 @@ def _parse_command_line_args(argv):  # Could use argparse (or ANTLR)
     args = { _SOURCE: [], _IMPORT_PATH: [], _PAYLOAD_TYPE_PATH: [],
              _PROJECT_PROTOCOL: None, _PROJECT_DIR: None }
     if len(argv) > 1:
-        iter = argv[1:].__iter__()
-        for arg in iter:
+        it = iter(argv[1:])
+        for arg in it:
             if arg == '-ip' or arg == '-importpath':  # Factor out constants
-                path = iter.next().split(';')
+                path = next(it).split(';')
                 args[_IMPORT_PATH].extend(path)
             elif arg == '-pp' or arg == '-payloadpath':
-                path = iter.next().split(';')
+                path = next(it).split(';')
                 args[_PAYLOAD_TYPE_PATH].extend(path)
             elif arg == '-project':
-                args[_PROJECT_PROTOCOL] = iter.next()
-                args[_PROJECT_ROLE] = iter.next()
+                args[_PROJECT_PROTOCOL] = next(it)
+                args[_PROJECT_ROLE] = next(it)
             elif arg == '-o':
-                args[_PROJECT_DIR] = iter.next()
+                args[_PROJECT_DIR] = next(it)
             else:
                 if arg.startswith('-'):
                     util.report_error("Bad argument flag: " + arg)

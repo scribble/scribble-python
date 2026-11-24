@@ -1,5 +1,5 @@
-import scrib_constants as constants
-import scrib_util as util
+import scribble.scrib_constants as constants
+import scribble.scrib_util as util
 
 
 # Mostly the basic tree-based routines, Context trees mirror the AST (more

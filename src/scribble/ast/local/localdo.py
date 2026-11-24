@@ -1,17 +1,17 @@
-import scrib_constants as constants
+import scribble.scrib_constants as constants
 
-from ast.local.localnode import LocalNode as LocalNode
+from scribble.ast.local.localnode import LocalNode as LocalNode
 
-from ast.roledecl import get_role_name as roledecl_get_role_name
+from scribble.ast.roledecl import get_role_name as roledecl_get_role_name
 
-from ast.roledecllist import \
+from scribble.ast.roledecllist import \
     get_roledecl_children as roledecllist_get_roledecl_children
 
-from ast.globel.globalprotocoldecl import (
+from scribble.ast.globel.globalprotocoldecl import (
     get_roledecllist_child as globalprotocoldecl_get_roledecllist_child
 )
 
-from ast.globel.globaldo import (
+from scribble.ast.globel.globaldo import (
     traverse_do as globaldo_traverse_do,
     get_scope_child as globaldo_get_scope_child,
     get_argumentlist_child as globaldo_get_argumentlist_child,
@@ -103,14 +103,14 @@ class LocalDo(LocalNode):
             clone = context_.add_scope(scope)
         do_stack = clone.peek_do_chain()
         target = self.get_target()
-        if target in do_stack.keys():
+        if target in list(do_stack.keys()):
             clone = clone.set_do_exitable(False)
         cv.set_context(clone)
     
     def context_visitor_visit(self, cv):
         context_ = cv.get_context()
         lpd = context_.get_projection(self.target)
-        if self.get_target() not in context_.peek_do_chain().keys():
+        if self.get_target() not in list(context_.peek_do_chain().keys()):
             clone = context_.push_localdo(self)
             block = lpd.get_body().get_block()
        
@@ -141,7 +141,7 @@ class LocalDo(LocalNode):
         roleparam = None
         rd_iter = roledecllist_get_roledecl_children(rd_list).__iter__()
         for (a, p) in ri_list:
-            rd = rd_iter.next()
+            rd = next(rd_iter)
             if a == rolearg:
                 if p:
                     roleparam = p
