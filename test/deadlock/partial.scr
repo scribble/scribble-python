@@ -1,0 +1,9 @@
+module partial;
+
+// Only one projection of the system is present: role B is addressed by A but
+// declares no local type.  The gate must refuse this system, not report the
+// send to B as a deadlock.
+local protocol OnlyA at A(role A, role B) {
+  m1() from A;
+  m2() from B;
+}

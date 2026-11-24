@@ -1,0 +1,14 @@
+module selfrec_dead;
+
+// The same cycle with one side short: B never sends m2, so A blocks inside the
+// loop and the verdict has to be a deadlock with a trace, not a skip.
+local protocol DeadA at A (role A, role B) {
+m1() to B;
+m2() from B;
+do DeadA(A as A, B as B);
+}
+
+local protocol DeadB at B (role A, role B) {
+m1() from A;
+do DeadB(A as A, B as B);
+}

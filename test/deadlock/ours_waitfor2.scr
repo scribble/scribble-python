@@ -1,0 +1,33 @@
+module ours_waitfor2;
+
+local protocol WA at A (role A, role B) {
+m1() to B;
+m1() from B;
+choice at A {
+m2() to B;
+m2() to B;
+m3() from B;
+m3() from B;
+} or {
+m3() from B;
+m3() from B;
+m2() to B;
+m2() to B;
+}
+}
+
+local protocol WB at B (role A, role B) {
+m1() from A;
+m1() to A;
+choice at B {
+m2() from A;
+m2() from A;
+m3() to A;
+m3() to A;
+} or {
+m3() to A;
+m3() to A;
+m2() from A;
+m2() from A;
+}
+}

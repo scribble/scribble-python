@@ -15,6 +15,7 @@ usage() {
   -ip [path]                                    Scribble import path
   -pp [path]                                    Payload type path
   -project [full global protocol name] [role]   project local protocols
+  -deadlock                                     check the local types for deadlock
 EOF
 }
 

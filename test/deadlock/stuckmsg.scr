@@ -1,0 +1,23 @@
+module stuckmsg;
+
+// local-type transcription of scribble-java bad/safety/stuckmsg/twoparty/Test04.scr
+// global: choice at A { 1:A->B; 2:B->A } or { 1:A->B; 3:B->A }
+local protocol SA at A (role A, role B) {
+choice at A {
+m1() to B;
+m2() from B;
+} or {
+m1() to B;
+m3() from B;
+}
+}
+
+local protocol SB at B (role A, role B) {
+choice at B {
+m1() from A;
+m2() to A;
+} or {
+m1() from A;
+m3() to A;
+}
+}

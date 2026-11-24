@@ -17,6 +17,8 @@ from .visit.reachabilitychecker import ReachabilityChecker as ReachabilityChecke
 from .visit.subprotocolcollector import \
     SubprotocolCollector as SubprotocolCollector
 
+from . import deadlock as deadlock
+
 from .ast.module import (
     pretty_print as module_pretty_print,
     get_full_name as module_get_full_name,
@@ -52,6 +54,8 @@ _PAYLOAD_TYPE_PATH = '_PAYLOAD_TYPE_PATH'
 _PROJECT_PROTOCOL = 'PROJECT_PROTOCOL'
 _PROJECT_ROLE = '_PROJECT_ROLE'
 _PROJECT_DIR = '_PROJECT_DIR'
+_DEADLOCK = '_DEADLOCK'
+_DEADLOCK_EXPORT = '_DEADLOCK_EXPORT'
 
 
 def main(argv, otherArg=None):
@@ -109,6 +113,18 @@ def main(argv, otherArg=None):
 
     # Check reachability at the local protocol level
     _check_reachability(context_)
+
+    # Optional: search the asynchronous system induced by the local types for
+    # a state in which every role is blocked (Section 4.6 well-formedness and
+    # projection rule out circular waits a priori, but a set of local types
+    # need not come from a global type, and this is the direct check).
+    if args[_DEADLOCK]:
+        deadlock.set_export_dir(args[_DEADLOCK_EXPORT])
+        module_ = context_.get_module(module_get_full_name(module_))
+        statuses = deadlock.check_projections(context_, module_)
+        statuses += deadlock.check_module(context_, module_)
+        if deadlock.DEADLOCK in statuses:
+            sys.exit(1)
 
     proto = args[_PROJECT_PROTOCOL]
     if proto is not None:
@@ -264,7 +280,8 @@ def _write_module(m, filepath):
 
 def _parse_command_line_args(argv):  # Could use argparse (or ANTLR)
     args = { _SOURCE: [], _IMPORT_PATH: [], _PAYLOAD_TYPE_PATH: [],
-             _PROJECT_PROTOCOL: None, _PROJECT_DIR: None }
+             _PROJECT_PROTOCOL: None, _PROJECT_DIR: None, _DEADLOCK: False,
+             _DEADLOCK_EXPORT: None }
     if len(argv) > 1:
         it = iter(argv[1:])
         for arg in it:
@@ -279,6 +296,16 @@ def _parse_command_line_args(argv):  # Could use argparse (or ANTLR)
                 args[_PROJECT_ROLE] = next(it)
             elif arg == '-o':
                 args[_PROJECT_DIR] = next(it)
+            elif arg == '-deadlock':
+                args[_DEADLOCK] = True
+            elif arg == '-deadlock-export':
+                args[_DEADLOCK] = True
+                path = next(it, None)
+                if not path:
+                    util.report_error(
+                        "Bad argument flag: -deadlock-export requires a "
+                        "directory")
+                args[_DEADLOCK_EXPORT] = path
             else:
                 if arg.startswith('-'):
                     util.report_error("Bad argument flag: " + arg)

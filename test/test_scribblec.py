@@ -48,8 +48,12 @@ def sources():
     return [
         p
         for p in sorted(REPO.glob("test/**/*.scr"))
-        # never treat the recorded goldens as corpus input
-        if "expected" not in p.parts and MODULE_RE.search(p.read_text(encoding="latin-1"))
+        # never treat the recorded goldens as corpus input, and leave the
+        # deadlock-gate fixtures to test_deadlock.py (its inputs are not
+        # protocols whose projection output is worth a golden)
+        if "expected" not in p.parts
+        and "deadlock" not in p.parts
+        and MODULE_RE.search(p.read_text(encoding="latin-1"))
     ]
 
 
