@@ -1,0 +1,11 @@
+module popl14.RPCcomposition_Comp2_Service3;
+
+import popl14.RPCcomposition_Relay_Last;
+import popl14.RPCcomposition_RPC_Client;
+
+
+local protocol Comp2_Service3 at Service3(role Client as C, role Service1 as S1, role Service2 as S2, role Service3 as S3, role Service4 as S4) {
+do __2: popl14.RPCcomposition_Relay_Last.Relay_Last<m2a(), m3()>(S2 as First, S1 as Middle, S3 as Last);
+do __3: popl14.RPCcomposition_RPC_Client.RPC_Client<m4(), m4a()>(S3 as Client, S4 as Server);
+do __4: popl14.RPCcomposition_RPC_Client.RPC_Client<m5(), m5a()>(S3 as Client, S4 as Server);
+}

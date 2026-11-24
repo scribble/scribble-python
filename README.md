@@ -79,3 +79,31 @@ Behavioural equivalence was checked against Python 2.7 (python:2.7-slim in a
 container): for every global protocol in test/popl14 (40 protocol/role
 projections), validation succeeds and the generated local protocols are
 byte-identical to the Python 2 output.
+
+Tests
+-----
+
+    pip install -r requirements-dev.txt
+    python3 -m pytest
+
+test/test_scribblec.py runs two gates over the corpus in test/:
+
+- validation: every .scr file is accepted and prints exactly the diagnostics
+  recorded under test/expected/validate/. Note that scribblec reports
+  well-formedness violations on stdout while still exiting 0, so the recorded
+  message is the assertion, not the exit status;
+- projection: every global protocol projected onto every declared role must
+  produce exactly the files recorded under test/expected/projection/, byte for
+  byte (41 generated local protocols over 40 protocol/role jobs; a protocol that
+  fails its own well-formedness check projects nothing and prints its
+  diagnostic instead, which is recorded too).
+
+Both trees were generated from the Python 2 reference implementation and are
+committed, so the suite is a porting regression test: a change that alters
+diagnostics or generated local protocols fails it. After an intentional
+behaviour change, re-record with
+
+    SCRIBBLE_UPDATE_GOLDENS=1 python3 -m pytest
+
+and say so in the commit message, because that discards the Python 2 oracle for
+the affected cases.

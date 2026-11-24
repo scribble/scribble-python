@@ -1,0 +1,7 @@
+module popl14.RPCcomposition_Relay_Last;
+
+
+
+local protocol Relay_Last at Last<sig M1, sig M2>(role First as F, role Middle as M, role Last as L) {
+M2 from M;
+}

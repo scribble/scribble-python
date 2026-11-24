@@ -1,0 +1,10 @@
+module popl14.RPCcomposition_Comp1_Service4;
+
+
+
+local protocol Comp1_Service4 at Service4(role Client as C, role Service1 as S1, role Service2 as S2, role Service3 as S3, role Service4 as S4) {
+m4() from S3;
+m4a() to S3;
+m5() from S3;
+m5a() to S3;
+}

@@ -1,0 +1,23 @@
+module popl14.Negotiation2_NegotiateAux_CounterParty;
+
+import popl14.Negotiation2_NegotiateAux_Proposer;
+
+
+type <yml>  "SAPDoc1" from "SAPDoc1.yml" as SAP;
+
+local protocol NegotiateAux_CounterParty at CounterParty(role Proposer as A, role CounterParty as B) {
+choice at B
+{
+accept() to A;
+confirm() from A;
+}
+or
+{
+reject() to A;
+}
+or
+{
+propose(SAP) to A;
+do __2: popl14.Negotiation2_NegotiateAux_Proposer.NegotiateAux_Proposer(B as Proposer, A as CounterParty);
+}
+}

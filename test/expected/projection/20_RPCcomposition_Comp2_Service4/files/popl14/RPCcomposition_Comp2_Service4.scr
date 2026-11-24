@@ -1,0 +1,9 @@
+module popl14.RPCcomposition_Comp2_Service4;
+
+import popl14.RPCcomposition_RPC_Server;
+
+
+local protocol Comp2_Service4 at Service4(role Client as C, role Service1 as S1, role Service2 as S2, role Service3 as S3, role Service4 as S4) {
+do __3: popl14.RPCcomposition_RPC_Server.RPC_Server<m4(), m4a()>(S3 as Client, S4 as Server);
+do __4: popl14.RPCcomposition_RPC_Server.RPC_Server<m5(), m5a()>(S3 as Client, S4 as Server);
+}

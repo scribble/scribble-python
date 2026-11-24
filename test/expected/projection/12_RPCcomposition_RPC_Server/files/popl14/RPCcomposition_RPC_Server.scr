@@ -1,0 +1,8 @@
+module popl14.RPCcomposition_RPC_Server;
+
+
+
+local protocol RPC_Server at Server<sig M1, sig M2>(role Client as C, role Server as S) {
+M1 from C;
+M2 to C;
+}

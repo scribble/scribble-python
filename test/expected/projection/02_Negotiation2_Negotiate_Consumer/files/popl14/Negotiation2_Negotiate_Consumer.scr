@@ -1,0 +1,11 @@
+module popl14.Negotiation2_Negotiate_Consumer;
+
+import popl14.Negotiation2_NegotiateAux_Proposer;
+
+
+type <yml>  "SAPDoc1" from "SAPDoc1.yml" as SAP;
+
+local protocol Negotiate_Consumer at Consumer(role Consumer, role Producer) {
+propose(SAP) to Producer;
+do __1: popl14.Negotiation2_NegotiateAux_Proposer.NegotiateAux_Proposer(Consumer as Proposer, Producer as CounterParty);
+}
