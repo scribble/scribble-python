@@ -20,7 +20,8 @@ commit message) with
 
     SCRIBBLE_UPDATE_GOLDENS=1 python3 -m pytest -q
 
-Every job is named NN_<file>_<protocol>_<role> so a failure names its case.
+Every job is named <file>__<protocol>_<role> so a failure names its case and
+adding a source file does not rename any existing golden directory.
 """
 import os
 import pathlib
@@ -53,8 +54,13 @@ def sources():
 
 
 def jobs():
-    """[(name, source, module, protocol, role)] -- one per projection target."""
+    """[(name, source, module, protocol, role)] -- one per projection target.
+
+    The name is keyed by the job itself, not by its position in the corpus, so
+    adding a source file never renumbers the golden directory of unrelated jobs.
+    """
     out = []
+    seen = set()
     for src in sources():
         text = src.read_text(encoding="latin-1").replace("\r\n", "\n")
         found = MODULE_RE.search(text)
@@ -65,7 +71,9 @@ def jobs():
             start, end = rest.find("("), rest.find(")", rest.find("("))
             roles = ROLE_RE.findall(rest[start:end])
             for role in dict.fromkeys(roles):
-                name = f"{len(out):02d}_{src.stem}_{proto_match.group(1)}_{role}"
+                name = f"{src.stem}__{proto_match.group(1)}__{role}"
+                assert name not in seen, f"two jobs share the name {name}"
+                seen.add(name)
                 out.append((name, src, module, proto_match.group(1), role))
     return out
 
